@@ -1,0 +1,283 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=windows-1252"> 
+  <title>Coverage Report > DeleteController</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">com.CyHawkClash.Backend.Views</a>
+</div>
+
+<h1>Coverage Summary for Class: DeleteController (com.CyHawkClash.Backend.Views)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">DeleteController</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (4/4)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    97.2%
+  </span>
+  <span class="absValue">
+    (35/36)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package com.CyHawkClash.Backend.Views;
+&nbsp;
+&nbsp;import com.CyHawkClash.Backend.Models.Attachment.AttachmentRepository;
+&nbsp;import com.CyHawkClash.Backend.Models.Game.Game;
+&nbsp;import com.CyHawkClash.Backend.Models.Game.GameRepository;
+&nbsp;import com.CyHawkClash.Backend.Models.Map.Map;
+&nbsp;import com.CyHawkClash.Backend.Models.Map.MapRepository;
+&nbsp;import com.CyHawkClash.Backend.Models.Moderator.Moderator;
+&nbsp;import com.CyHawkClash.Backend.Models.Moderator.ModeratorRepository;
+&nbsp;import com.CyHawkClash.Backend.Models.Objective.ObjectiveRepository;
+&nbsp;import com.CyHawkClash.Backend.Models.PlayerInGame.PlayerInGame;
+&nbsp;import com.CyHawkClash.Backend.Models.PlayerInGame.PlayerInGameRepository;
+&nbsp;import com.CyHawkClash.Backend.Models.PlayerInGameStatistics.PlayerInGameStatistics;
+&nbsp;import com.CyHawkClash.Backend.Models.PlayerInGameStatistics.PlayerInGameStatisticsRepository;
+&nbsp;import com.CyHawkClash.Backend.Models.Team.Team;
+&nbsp;import com.CyHawkClash.Backend.Models.Team.TeamRepository;
+&nbsp;import com.CyHawkClash.Backend.Models.User.User;
+&nbsp;import com.CyHawkClash.Backend.Models.User.UserRepository;
+&nbsp;import com.CyHawkClash.Backend.Models.UserWeapon.UserWeaponRepository;
+&nbsp;import com.CyHawkClash.Backend.Models.UserWeaponAttachment.UserWeaponAttachmentRepository;
+&nbsp;import com.CyHawkClash.Backend.Models.Weapon.WeaponRepository;
+&nbsp;import com.CyHawkClash.Backend.Models.WeaponAttachment.WeaponAttachmentRepository;
+&nbsp;import io.swagger.v3.oas.annotations.Operation;
+&nbsp;import io.swagger.v3.oas.annotations.media.Content;
+&nbsp;import io.swagger.v3.oas.annotations.media.ExampleObject;
+&nbsp;import io.swagger.v3.oas.annotations.media.Schema;
+&nbsp;import io.swagger.v3.oas.annotations.responses.ApiResponse;
+&nbsp;import io.swagger.v3.oas.annotations.responses.ApiResponses;
+&nbsp;import io.swagger.v3.oas.annotations.tags.Tag;
+&nbsp;import org.springframework.beans.factory.annotation.Autowired;
+&nbsp;import org.springframework.http.HttpHeaders;
+&nbsp;import org.springframework.http.ResponseEntity;
+&nbsp;import org.springframework.web.bind.annotation.DeleteMapping;
+&nbsp;import org.springframework.web.bind.annotation.PathVariable;
+&nbsp;import org.springframework.web.bind.annotation.RequestHeader;
+&nbsp;import org.springframework.web.bind.annotation.RestController;
+&nbsp;
+&nbsp;import java.util.Collection;
+&nbsp;
+&nbsp;
+&nbsp;@Tag(name = &quot;Delete Controller&quot;, description = &quot;Holds all of the DELETE api controllers&quot;)
+&nbsp;@RestController
+<b class="fc">&nbsp;public class DeleteController {</b>
+&nbsp;
+<b class="fc">&nbsp;    private String success = &quot;{\&quot;message\&quot;:\&quot;success\&quot;}&quot;;</b>
+<b class="fc">&nbsp;    private String failure = &quot;{\&quot;message\&quot;:\&quot;failure\&quot;}&quot;;</b>
+&nbsp;
+&nbsp;    @Autowired
+&nbsp;    private AttachmentRepository attachmentRepository;
+&nbsp;
+&nbsp;    @Autowired
+&nbsp;    private MapRepository mapRepository;
+&nbsp;
+&nbsp;    @Autowired
+&nbsp;    private GameRepository gameRepository;
+&nbsp;
+&nbsp;    @Autowired
+&nbsp;    private ObjectiveRepository objectiveRepository;
+&nbsp;
+&nbsp;    @Autowired
+&nbsp;    private PlayerInGameRepository playerInGameRepository;
+&nbsp;
+&nbsp;    @Autowired
+&nbsp;    private UserRepository userRepository;
+&nbsp;
+&nbsp;    @Autowired
+&nbsp;    private ModeratorRepository moderatorRepository;
+&nbsp;
+&nbsp;    @Autowired
+&nbsp;    private TeamRepository teamRepository;
+&nbsp;
+&nbsp;    @Autowired
+&nbsp;    private UserWeaponRepository userWeaponRepository;
+&nbsp;
+&nbsp;    @Autowired
+&nbsp;    private UserWeaponAttachmentRepository userWeaponAttachmentRepository;
+&nbsp;
+&nbsp;    @Autowired
+&nbsp;    private WeaponRepository weaponRepository;
+&nbsp;
+&nbsp;    @Autowired
+&nbsp;    private WeaponAttachmentRepository weaponAttachmentRepository;
+&nbsp;
+&nbsp;    @Autowired
+&nbsp;    private PlayerInGameStatisticsRepository playerInGameStatisticsRepository;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;    @Operation(
+&nbsp;            summary = &quot;Deletes a User&quot;,
+&nbsp;            description = &quot;Based on a User id a User object will be deleted from the table&quot;
+&nbsp;    )
+&nbsp;    @ApiResponses({
+&nbsp;        @ApiResponse(responseCode = &quot;200&quot;, content = {@Content(schema = @Schema(implementation = User.class))}),
+&nbsp;        @ApiResponse(responseCode = &quot;400&quot;, content = {@Content(schema = @Schema())}),
+&nbsp;        @ApiResponse(responseCode = &quot;403&quot;, content = {@Content(examples = {
+&nbsp;                @ExampleObject(name = &quot;Invalid JWT&quot;, value = &quot;\&quot;User not Registered\&quot;&quot;),
+&nbsp;                @ExampleObject(name = &quot;Other error&quot;, value = &quot;\&quot;User is logged out or not Registered\&quot;&quot;)
+&nbsp;        })})
+&nbsp;    })
+&nbsp;    @DeleteMapping(&quot;/users&quot;)
+&nbsp;    public String deleteUser(@RequestHeader(&quot;Authorization&quot;) String token) throws Exception{
+<b class="fc">&nbsp;        int id = Integer.parseInt(response.decode_jwt(token));</b>
+&nbsp;
+<b class="fc">&nbsp;        User user = userRepository.findById(id);</b>
+<b class="fc">&nbsp;        user.delete();</b>
+<b class="fc">&nbsp;        userRepository.save(user);</b>
+<b class="fc">&nbsp;        return success;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;    @Operation(
+&nbsp;            summary = &quot;Deletes a PlayerInGame&quot;,
+&nbsp;            description = &quot;Based on a PlayerInGame id a PlayerInGame object will be deleted from the table&quot;
+&nbsp;    )
+&nbsp;    @ApiResponses({
+&nbsp;            @ApiResponse(responseCode = &quot;200&quot;, content = {@Content(schema = @Schema(implementation = PlayerInGame.class))}),
+&nbsp;            @ApiResponse(responseCode = &quot;400&quot;, content = {@Content(schema = @Schema())}),
+&nbsp;            @ApiResponse(responseCode = &quot;403&quot;, content = {@Content(examples = {
+&nbsp;                    @ExampleObject(name = &quot;Invalid JWT&quot;, value = &quot;\&quot;User not Registered\&quot;&quot;),
+&nbsp;                    @ExampleObject(name = &quot;Other error&quot;, value = &quot;\&quot;User is logged out or not Registered\&quot;&quot;)
+&nbsp;            })})
+&nbsp;    })
+&nbsp;    @DeleteMapping(&quot;/pigs&quot;)
+&nbsp;    public ResponseEntity&lt;Object&gt; deletePig(@RequestHeader(&quot;Authorization&quot;) String token) throws Exception{
+<b class="fc">&nbsp;        HttpHeaders headers = new HttpHeaders();</b>
+<b class="fc">&nbsp;        headers.add(&quot;Content-type&quot;, &quot;application/text&quot;);</b>
+&nbsp;
+<b class="fc">&nbsp;        int id = Integer.parseInt(response.decode_jwt(token));</b>
+<b class="fc">&nbsp;        PlayerInGame pig = playerInGameRepository.findByUserAndDeleted(userRepository.findById(id), false);</b>
+<b class="fc">&nbsp;        PlayerInGameStatistics pigstats = playerInGameStatisticsRepository.findByPlayerInGameAndDeleted(pig, false);</b>
+<b class="fc">&nbsp;        if(pig == null || pigstats == null){</b>
+<b class="nc">&nbsp;            return new ResponseEntity&lt;&gt;(failure, headers, 400);</b>
+&nbsp;        }
+<b class="fc">&nbsp;        pig.delete();</b>
+<b class="fc">&nbsp;        pigstats.delete();</b>
+<b class="fc">&nbsp;        playerInGameRepository.save(pig);</b>
+<b class="fc">&nbsp;        playerInGameStatisticsRepository.save(pigstats);</b>
+&nbsp;
+<b class="fc">&nbsp;        return new ResponseEntity&lt;&gt;(success, headers, 200);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @DeleteMapping(&quot;/games&quot;)
+&nbsp;    public ResponseEntity&lt;Object&gt; deleteGame(@RequestHeader(&quot;Authorization&quot;) String token) throws Exception{
+<b class="fc">&nbsp;        HttpHeaders headers = new HttpHeaders();</b>
+<b class="fc">&nbsp;        headers.add(&quot;Content-type&quot;, &quot;application/text&quot;);</b>
+&nbsp;
+<b class="fc">&nbsp;        int id = Integer.parseInt(response.decode_jwt(token));</b>
+<b class="fc">&nbsp;        Moderator mod = moderatorRepository.findByUserAndDeleted(userRepository.findById(id), false);</b>
+<b class="fc">&nbsp;        Game game = gameRepository.findByModAndDeleted(mod, false);</b>
+<b class="fc">&nbsp;        Team team1 = teamRepository.findByGameAndTeamAndDeleted(game, false, false);</b>
+<b class="fc">&nbsp;        Team team2 = teamRepository.findByGameAndTeamAndDeleted(game, true, false);</b>
+&nbsp;//        Collection&lt;PlayerInGame&gt; pigsTeam1 = playerInGameRepository.findByTeam(team1);
+&nbsp;//        Collection&lt;PlayerInGame&gt; pigsTeam2 = playerInGameRepository.findByTeam(team2);
+&nbsp;
+&nbsp;        
+&nbsp;        //Delete all Pigs, mod and Game
+&nbsp;//        for(PlayerInGame pig : pigsTeam1){
+&nbsp;//            pig.delete();
+&nbsp;//            playerInGameRepository.save(pig);
+&nbsp;//        }
+&nbsp;//        for(PlayerInGame pig : pigsTeam2){
+&nbsp;//            pig.delete();
+&nbsp;//            playerInGameRepository.save(pig);
+&nbsp;//        }
+<b class="fc">&nbsp;        team1.delete();</b>
+<b class="fc">&nbsp;        team2.delete();</b>
+<b class="fc">&nbsp;        mod.delete();</b>
+<b class="fc">&nbsp;        game.delete();</b>
+<b class="fc">&nbsp;        moderatorRepository.save(mod);</b>
+<b class="fc">&nbsp;        gameRepository.save(game);</b>
+<b class="fc">&nbsp;        teamRepository.save(team1);</b>
+<b class="fc">&nbsp;        teamRepository.save(team2);</b>
+&nbsp;
+<b class="fc">&nbsp;        return new ResponseEntity&lt;&gt;(success, headers, 200);</b>
+&nbsp;
+&nbsp;    }
+&nbsp;    
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2023-12-06 14:48</div>
+</div>
+</body>
+</html>

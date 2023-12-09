@@ -1,0 +1,332 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=windows-1252"> 
+  <title>Coverage Report > bullet_update</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">com.CyHawkClash.Backend.Views</a>
+</div>
+
+<h1>Coverage Summary for Class: bullet_update (com.CyHawkClash.Backend.Views)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">bullet_update</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (11/11)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    61.2%
+  </span>
+  <span class="absValue">
+    (49/80)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package com.CyHawkClash.Backend.Views;
+&nbsp;
+&nbsp;import com.CyHawkClash.Backend.Models.Bullet.Bullet;
+&nbsp;import com.CyHawkClash.Backend.Models.Bullet.BulletRepository;
+&nbsp;import com.CyHawkClash.Backend.Models.GameMap.GameMapRepository;
+&nbsp;import com.CyHawkClash.Backend.Models.GameStatistics.GameStatistics;
+&nbsp;import com.CyHawkClash.Backend.Models.PlayerInGame.PlayerInGame;
+&nbsp;import com.CyHawkClash.Backend.Models.PlayerInGame.PlayerInGameRepository;
+&nbsp;import com.CyHawkClash.Backend.Models.PlayerInGameStatistics.PlayerInGameStatistics;
+&nbsp;import com.CyHawkClash.Backend.Models.PlayerInGameStatistics.PlayerInGameStatisticsRepository;
+&nbsp;import com.CyHawkClash.Backend.Models.Team.TeamRepository;
+&nbsp;import com.CyHawkClash.Backend.Models.TeamStatistics.TeamStatistics;
+&nbsp;import com.CyHawkClash.Backend.Models.TeamStatistics.TeamStatisticsRepository;
+&nbsp;import com.CyHawkClash.Backend.Websocket.ChatServer;
+&nbsp;import org.slf4j.Logger;
+&nbsp;import org.slf4j.LoggerFactory;
+&nbsp;import org.springframework.beans.factory.annotation.Autowired;
+&nbsp;import org.springframework.stereotype.Component;
+&nbsp;import org.springframework.stereotype.Service;
+&nbsp;
+&nbsp;import java.awt.geom.Line2D;
+&nbsp;import java.util.Collection;
+&nbsp;import java.util.List;
+&nbsp;
+&nbsp;import static java.lang.Thread.sleep;
+&nbsp;
+&nbsp;
+&nbsp;@Service
+&nbsp;public class bullet_update implements Runnable{
+&nbsp;
+&nbsp;    private Bullet bullet;
+&nbsp;
+&nbsp;
+&nbsp;    private static BulletRepository bulletRepository;
+&nbsp;
+&nbsp;    private static PlayerInGameRepository playerInGameRepository;
+&nbsp;
+&nbsp;    private static TeamRepository teamRepository;
+&nbsp;
+&nbsp;    private static PlayerInGameStatisticsRepository playerInGameStatisticsRepository;
+&nbsp;
+&nbsp;    private static GameMapRepository gameMapRepository;
+&nbsp;
+&nbsp;    private static TeamStatisticsRepository teamStatisticsRepository;
+&nbsp;
+&nbsp;    @Autowired
+&nbsp;    public void setBulletRepository(BulletRepository repo){
+<b class="fc">&nbsp;        bulletRepository = repo;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Autowired
+&nbsp;    public void setPlayerInGameRepository(PlayerInGameRepository repo){
+<b class="fc">&nbsp;        playerInGameRepository = repo;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Autowired
+&nbsp;    public void setTeamRepository(TeamRepository repo) {
+<b class="fc">&nbsp;        teamRepository = repo;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Autowired
+&nbsp;    public void setPlayerInGameStatisticsRepository(PlayerInGameStatisticsRepository repo) {
+<b class="fc">&nbsp;        playerInGameStatisticsRepository = repo;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Autowired
+&nbsp;    public void setTeamStatisticsRepository(TeamStatisticsRepository repo) {
+<b class="fc">&nbsp;        teamStatisticsRepository = repo;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Autowired
+&nbsp;    public void setGameMapRepository(GameMapRepository repo) {
+<b class="fc">&nbsp;        bullet_update.gameMapRepository = repo;</b>
+&nbsp;    }
+&nbsp;
+<b class="fc">&nbsp;    private final Logger logger = LoggerFactory.getLogger(bullet_update.class);</b>
+&nbsp;
+<b class="fc">&nbsp;    public bullet_update(){}</b>
+&nbsp;    private boolean collided(PlayerInGameStatistics playerInGameStatistics){
+<b class="fc">&nbsp;        double partbx = (bullet.getOld_x() - bullet.getX()) / 99.0;</b>
+<b class="fc">&nbsp;        double partby = (bullet.getOld_y() - bullet.getY()) / 99.0;</b>
+<b class="fc">&nbsp;        double partpx = (bullet.getOld_x() - bullet.getX()) / 99.0;</b>
+<b class="fc">&nbsp;        double partpy = (bullet.getOld_x() - bullet.getX()) / 99.0;</b>
+<b class="fc">&nbsp;        for(int i = 0; i &lt; 100; i++){</b>
+<b class="fc">&nbsp;            double d = Math.sqrt(Math.pow(bullet.getX() + i*partbx - playerInGameStatistics.getX_coordinate() - i*partpx, 2) + Math.pow(bullet.getY() + i*partby - playerInGameStatistics.getY_coordinate() - i*partpy, 2));</b>
+<b class="fc">&nbsp;            if (d &lt;= 50 + bullet.getSize()){</b>
+<b class="nc">&nbsp;                return true;</b>
+&nbsp;            }
+&nbsp;        }
+<b class="fc">&nbsp;        return false;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public void updateBullet(){
+<b class="fc">&nbsp;        float height = (float)(Math.sin(bullet.getAngle()) * bullet.getSpeed());</b>
+<b class="fc">&nbsp;        float width = (float)(Math.cos(bullet.getAngle()) * bullet.getSpeed());</b>
+&nbsp;
+<b class="fc">&nbsp;        bullet.setX(bullet.getX() + width);</b>
+<b class="fc">&nbsp;        bullet.setY(bullet.getY() - height);</b>
+&nbsp;
+<b class="fc">&nbsp;        if(bullet.getPlayerInGame().getTeam().isTeam()){</b>
+<b class="fc">&nbsp;            if((bullet.getX() + bullet.getSize()) &lt;= 1000 &amp;&amp; (bullet.getX() - bullet.getSize()) &gt;= 500 &amp;&amp; (bullet.getY() - bullet.getSize()) &gt;= 3500 &amp;&amp; (bullet.getY() + bullet.getSize()) &lt;= 4000){</b>
+<b class="nc">&nbsp;                bullet.delete();</b>
+&nbsp;            }
+&nbsp;        } else {
+<b class="nc">&nbsp;            if((bullet.getX() + bullet.getSize()) &lt;= 7000 &amp;&amp; (bullet.getX() - bullet.getSize()) &gt;= 6500 &amp;&amp; (bullet.getY() - bullet.getSize()) &gt;= 3500 &amp;&amp; (bullet.getY() + bullet.getSize()) &lt;= 4000){</b>
+<b class="nc">&nbsp;                bullet.delete();</b>
+&nbsp;            }
+&nbsp;        }
+&nbsp;
+<b class="fc">&nbsp;        if(!bullet.isDeleted()) {</b>
+<b class="fc">&nbsp;            Collection&lt;PlayerInGame&gt; playerInGameList = playerInGameRepository.findByTeam(teamRepository.findByGameAndTeamAndDeleted(bullet.getPlayerInGame().getTeam().getGame(), !(bullet.getPlayerInGame().getTeam().isTeam()), false));</b>
+<b class="fc">&nbsp;            for (PlayerInGame playerInGame : playerInGameList) {</b>
+<b class="fc">&nbsp;                PlayerInGameStatistics playerInGameStatistics = playerInGameStatisticsRepository.findByPlayerInGameAndDeleted(playerInGame, false);</b>
+<b class="fc">&nbsp;                if (playerInGameStatistics.getHp() == 0) {</b>
+<b class="nc">&nbsp;                    break;</b>
+&nbsp;                }
+<b class="fc">&nbsp;                if (collided(playerInGameStatistics)) {</b>
+<b class="nc">&nbsp;                    PlayerInGameStatistics self = playerInGameStatisticsRepository.findByPlayerInGameAndDeleted(bullet.getPlayerInGame(), false);</b>
+<b class="nc">&nbsp;                    TeamStatistics allyTeamStats = teamStatisticsRepository.findByTeamAndDeleted(self.getPlayerInGame().getTeam(), false);</b>
+<b class="nc">&nbsp;                    TeamStatistics enemyTeamStats = teamStatisticsRepository.findByTeamAndDeleted(playerInGameStatistics.getPlayerInGame().getTeam(), false);</b>
+<b class="nc">&nbsp;                    playerInGameStatistics.setHp(Math.max(0, playerInGameStatistics.getHp() - bullet.getDamage()));</b>
+<b class="nc">&nbsp;                    if (playerInGameStatistics.getHp() == 0) {</b>
+<b class="nc">&nbsp;                        playerInGameStatistics.incNum_deaths();</b>
+<b class="nc">&nbsp;                        self.incNum_kills();</b>
+<b class="nc">&nbsp;                        allyTeamStats.incTeamKills();</b>
+<b class="nc">&nbsp;                        enemyTeamStats.incTeamDeaths();</b>
+<b class="nc">&nbsp;                        ChatServer.broadcastViaGameId(self.getPlayerInGame().getUser().getUsername() + &quot; killed &quot; + playerInGame.getUser().getUsername(), bullet.getPlayerInGame().getTeam().getGame().getId());</b>
+<b class="nc">&nbsp;                        Revive revive = new Revive();</b>
+<b class="nc">&nbsp;                        revive.setPlayerInGameStatistics(playerInGameStatistics);</b>
+<b class="nc">&nbsp;                        Thread t = new Thread(revive);</b>
+<b class="nc">&nbsp;                        t.start();</b>
+&nbsp;                    }
+<b class="nc">&nbsp;                    playerInGameStatisticsRepository.save(playerInGameStatistics);</b>
+<b class="nc">&nbsp;                    teamStatisticsRepository.save(allyTeamStats);</b>
+<b class="nc">&nbsp;                    teamStatisticsRepository.save(enemyTeamStats);</b>
+<b class="nc">&nbsp;                    playerInGameStatisticsRepository.save(self);</b>
+<b class="nc">&nbsp;                    bullet.delete();</b>
+<b class="nc">&nbsp;                    break;</b>
+&nbsp;                }
+<b class="fc">&nbsp;            }</b>
+&nbsp;        }
+&nbsp;
+<b class="fc">&nbsp;        if(!bullet.isDeleted()){</b>
+<b class="fc">&nbsp;            if((bullet.getX() + bullet.getSize()) &gt; 7000 || (bullet.getX() - bullet.getSize()) &lt; 500 || (bullet.getY() - bullet.getSize()) &lt; 500 || (bullet.getY() + bullet.getSize()) &gt; 7000){</b>
+<b class="fc">&nbsp;                bullet.delete();</b>
+&nbsp;            }
+&nbsp;        }
+&nbsp;
+<b class="fc">&nbsp;        if(!bullet.isDeleted()){</b>
+<b class="fc">&nbsp;            String[] map = gameMapRepository.findByGame(bullet.getPlayerInGame().getTeam().getGame()).getMapStr().split(&quot;,&quot;);</b>
+<b class="fc">&nbsp;            for(int i = 0; i &lt; map.length; i++){</b>
+<b class="fc">&nbsp;                char[] line = map[i].toCharArray();</b>
+<b class="fc">&nbsp;                for(int j = 0; j &lt; line.length; j++){</b>
+<b class="fc">&nbsp;                    if(line[j] == &#39;o&#39;){</b>
+<b class="fc">&nbsp;                        if((bullet.getX() + bullet.getSize() &gt;= i*500 &amp;&amp; bullet.getX() - bullet.getSize() &lt;= (i+1)*500) &amp;&amp; (bullet.getY() + bullet.getSize() &gt;= j*500 &amp;&amp; bullet.getY() - bullet.getSize() &lt;= (j+1)*500)){</b>
+<b class="nc">&nbsp;                            bullet.delete();</b>
+<b class="nc">&nbsp;                            break;</b>
+&nbsp;                        }
+&nbsp;                    }
+&nbsp;                }
+&nbsp;            }
+&nbsp;        }
+&nbsp;
+<b class="fc">&nbsp;        bulletRepository.save(bullet);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public void run() {
+<b class="fc">&nbsp;        int threadCounter = 0;</b>
+<b class="fc">&nbsp;        while (bullet.getBulletRange() != threadCounter) {</b>
+<b class="fc">&nbsp;            if(bullet.isDeleted()){</b>
+&nbsp;                return;
+&nbsp;            }
+&nbsp;            try {
+<b class="fc">&nbsp;                sleep(80);</b>
+<b class="nc">&nbsp;            } catch (InterruptedException e) {</b>
+<b class="nc">&nbsp;                throw new RuntimeException(e);</b>
+<b class="fc">&nbsp;            }</b>
+<b class="fc">&nbsp;            logger.info(&quot;Thread running &quot; + threadCounter);</b>
+<b class="fc">&nbsp;            updateBullet();</b>
+&nbsp;
+<b class="fc">&nbsp;            threadCounter++;</b>
+&nbsp;        }
+<b class="nc">&nbsp;        bullet.delete();</b>
+<b class="nc">&nbsp;        bulletRepository.save(bullet);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public void setBullet (Bullet bullet){
+<b class="fc">&nbsp;        this.bullet = bullet;</b>
+&nbsp;    }
+&nbsp;}
+&nbsp;
+&nbsp;@Service
+&nbsp;class Revive implements Runnable{
+&nbsp;
+&nbsp;    private PlayerInGameStatistics playerInGameStatistics;
+&nbsp;
+&nbsp;    private static PlayerInGameStatisticsRepository playerInGameStatisticsRepository;
+&nbsp;
+&nbsp;    @Autowired
+&nbsp;    public void setPlayerInGameStatisticsRepository(PlayerInGameStatisticsRepository repo) {
+&nbsp;        playerInGameStatisticsRepository = repo;
+&nbsp;    }
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public void run() {
+&nbsp;        try {
+&nbsp;            sleep(5000);
+&nbsp;        } catch (InterruptedException e) {
+&nbsp;            throw new RuntimeException(e);
+&nbsp;        }
+&nbsp;        playerInGameStatistics.setHp(100);
+&nbsp;        playerInGameStatistics.setY_coordinate(3750);
+&nbsp;        if(playerInGameStatistics.getPlayerInGame().getTeam().isTeam()){
+&nbsp;            playerInGameStatistics.setX_coordinate(6750);
+&nbsp;        }
+&nbsp;        else{
+&nbsp;            playerInGameStatistics.setX_coordinate(750);
+&nbsp;        }
+&nbsp;        playerInGameStatisticsRepository.save(playerInGameStatistics);
+&nbsp;    }
+&nbsp;
+&nbsp;    public Revive() {}
+&nbsp;
+&nbsp;    public void setPlayerInGameStatistics(PlayerInGameStatistics playerInGameStatistics) {
+&nbsp;        this.playerInGameStatistics = playerInGameStatistics;
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2023-12-06 14:48</div>
+</div>
+</body>
+</html>

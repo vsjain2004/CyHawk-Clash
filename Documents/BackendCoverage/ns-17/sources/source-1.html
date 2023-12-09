@@ -1,0 +1,226 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=windows-1252"> 
+  <title>Coverage Report > Weapon</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">com.CyHawkClash.Backend.Models.Weapon</a>
+</div>
+
+<h1>Coverage Summary for Class: Weapon (com.CyHawkClash.Backend.Models.Weapon)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">Weapon</td>
+<td class="coverageStat">
+  <span class="percent">
+    92.3%
+  </span>
+  <span class="absValue">
+    (12/13)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    52.2%
+  </span>
+  <span class="absValue">
+    (12/23)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">Weapon$HibernateInstantiator$rJNUfUTn</td>
+  </tr>
+  <tr>
+    <td class="name">Weapon$HibernateInstantiator$ztPT5Gca</td>
+  </tr>
+  <tr>
+    <td class="name">Weapon$HibernateProxy$a7Wdqb8L</td>
+  </tr>
+  <tr>
+    <td class="name">Weapon$HibernateProxy$aDQxMNtQ</td>
+  </tr>
+<tr>
+  <td class="name"><strong>Total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    92.3%
+  </span>
+  <span class="absValue">
+    (12/13)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    52.2%
+  </span>
+  <span class="absValue">
+    (12/23)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package com.CyHawkClash.Backend.Models.Weapon;
+&nbsp;
+&nbsp;import com.CyHawkClash.Backend.Models.Attachment.Attachment;
+&nbsp;import jakarta.persistence.*;
+&nbsp;
+&nbsp;import java.util.List;
+&nbsp;
+&nbsp;@Entity
+&nbsp;public class Weapon {
+&nbsp;    @Id
+&nbsp;    @GeneratedValue(strategy = GenerationType.IDENTITY)
+&nbsp;    private int id;
+&nbsp;
+&nbsp;    @Column(name = &quot;weapon_name&quot;)
+&nbsp;    private String weapon_name;
+&nbsp;
+&nbsp;    @Column(name = &quot;base_fire_rate&quot;)
+&nbsp;    private int base_fire_rate;
+&nbsp;
+&nbsp;    @Column(name = &quot;base_max_bullets&quot;)
+&nbsp;    private int base_max_bullets;
+&nbsp;
+&nbsp;    @Column(name = &quot;base_bullet_size&quot;)
+&nbsp;    private int base_bullet_size;
+&nbsp;
+&nbsp;    @Column(name = &quot;base_reload_rate&quot;)
+&nbsp;    private int base_reload_rate;
+&nbsp;
+&nbsp;    @Column(name = &quot;base_range&quot;)
+&nbsp;    private int base_range;
+&nbsp;
+&nbsp;    @Column(name = &quot;base_bullet_speed&quot;)
+&nbsp;    private int base_bullet_speed;
+&nbsp;
+&nbsp;    @Column(name = &quot;base_damage&quot;)
+&nbsp;    private int base_damage;
+&nbsp;
+&nbsp;    @Column(name = &quot;base_accuracy&quot;)
+&nbsp;    private double base_accuracy;
+&nbsp;
+&nbsp;    @Column(name = &quot;base_spread&quot;)
+&nbsp;    private double base_spread;
+&nbsp;
+<b class="nc">&nbsp;    public Weapon(String weapon_name, int base_fire_rate, int base_max_bullets, int base_bullet_size, int base_reload_rate, int base_range, int base_bullet_speed, int base_damage, double base_accuracy, double base_spread) {</b>
+<b class="nc">&nbsp;        this.weapon_name = weapon_name;</b>
+<b class="nc">&nbsp;        this.base_fire_rate = base_fire_rate;</b>
+<b class="nc">&nbsp;        this.base_max_bullets = base_max_bullets;</b>
+<b class="nc">&nbsp;        this.base_bullet_size = base_bullet_size;</b>
+<b class="nc">&nbsp;        this.base_reload_rate = base_reload_rate;</b>
+<b class="nc">&nbsp;        this.base_range = base_range;</b>
+<b class="nc">&nbsp;        this.base_bullet_speed = base_bullet_speed;</b>
+<b class="nc">&nbsp;        this.base_damage = base_damage;</b>
+<b class="nc">&nbsp;        this.base_accuracy = base_accuracy;</b>
+<b class="nc">&nbsp;        this.base_spread = base_spread;</b>
+&nbsp;    }
+&nbsp;
+<b class="fc">&nbsp;    public Weapon() {}</b>
+&nbsp;
+&nbsp;    public int getId() {
+<b class="fc">&nbsp;        return id;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public String getWeapon_name() {
+<b class="fc">&nbsp;        return weapon_name;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public int getBase_fire_rate() {
+<b class="fc">&nbsp;        return base_fire_rate;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public int getBase_max_bullets() {
+<b class="fc">&nbsp;        return base_max_bullets;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public int getBase_bullet_size() {
+<b class="fc">&nbsp;        return base_bullet_size;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public int getBase_reload_rate() {
+<b class="fc">&nbsp;        return base_reload_rate;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public int getBase_range() {
+<b class="fc">&nbsp;        return base_range;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public int getBase_bullet_speed() {
+<b class="fc">&nbsp;        return base_bullet_speed;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public int getBase_damage() {
+<b class="fc">&nbsp;        return base_damage;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public double getBase_accuracy() {
+<b class="fc">&nbsp;        return base_accuracy;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public double getBase_spread(){
+<b class="fc">&nbsp;        return base_spread;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2023-12-06 14:48</div>
+</div>
+</body>
+</html>

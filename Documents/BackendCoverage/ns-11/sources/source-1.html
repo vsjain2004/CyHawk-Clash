@@ -1,0 +1,230 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=windows-1252"> 
+  <title>Coverage Report > TeamStatistics</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">com.CyHawkClash.Backend.Models.TeamStatistics</a>
+</div>
+
+<h1>Coverage Summary for Class: TeamStatistics (com.CyHawkClash.Backend.Models.TeamStatistics)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">TeamStatistics</td>
+<td class="coverageStat">
+  <span class="percent">
+    58.8%
+  </span>
+  <span class="absValue">
+    (10/17)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    70.8%
+  </span>
+  <span class="absValue">
+    (17/24)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">TeamStatistics$HibernateInstantiator$bpaXpc67</td>
+  </tr>
+  <tr>
+    <td class="name">TeamStatistics$HibernateInstantiator$xkYJZj4d</td>
+  </tr>
+  <tr>
+    <td class="name">TeamStatistics$HibernateProxy$pW4d9OsV</td>
+  </tr>
+  <tr>
+    <td class="name">TeamStatistics$HibernateProxy$UDcmPfjJ</td>
+  </tr>
+<tr>
+  <td class="name"><strong>Total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    58.8%
+  </span>
+  <span class="absValue">
+    (10/17)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    70.8%
+  </span>
+  <span class="absValue">
+    (17/24)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package com.CyHawkClash.Backend.Models.TeamStatistics;
+&nbsp;
+&nbsp;import com.CyHawkClash.Backend.Models.PlayerInGame.PlayerInGame;
+&nbsp;import com.CyHawkClash.Backend.Models.Team.Team;
+&nbsp;import jakarta.persistence.*;
+&nbsp;
+&nbsp;@Entity
+&nbsp;public class TeamStatistics {
+&nbsp;
+&nbsp;    @Id
+&nbsp;    @GeneratedValue(strategy = GenerationType.IDENTITY)
+&nbsp;    private int id;
+&nbsp;
+&nbsp;    @OneToOne
+&nbsp;    @JoinColumn(name = &quot;team_id&quot;)
+&nbsp;    private Team team;
+&nbsp;
+&nbsp;    @Column(name = &quot;obj_progress&quot;)
+&nbsp;    private double obj_progress;
+&nbsp;
+&nbsp;    @Column(name = &quot;team_kills&quot;)
+&nbsp;    private int team_kills;
+&nbsp;
+&nbsp;    @Column(name = &quot;team_deaths&quot;)
+&nbsp;    private int team_deaths;
+&nbsp;
+&nbsp;    @Column(name = &quot;num_victories&quot;)
+&nbsp;    private int num_victories;
+&nbsp;
+&nbsp;    @Column(name = &quot;num_defeats&quot;)
+&nbsp;    private int num_defeats;
+&nbsp;
+&nbsp;    @Column(name = &quot;deleted&quot;)
+&nbsp;    private boolean deleted;
+&nbsp;
+<b class="fc">&nbsp;    public TeamStatistics(Team team) {</b>
+<b class="fc">&nbsp;        this.team = team;</b>
+<b class="fc">&nbsp;        this.obj_progress = 0;</b>
+<b class="fc">&nbsp;        this.team_kills = 0;</b>
+<b class="fc">&nbsp;        this.team_deaths = 0;</b>
+<b class="fc">&nbsp;        this.num_victories = 0;</b>
+<b class="fc">&nbsp;        this.num_defeats = 0;</b>
+<b class="fc">&nbsp;        this.deleted = false;</b>
+&nbsp;    }
+&nbsp;
+<b class="fc">&nbsp;    public TeamStatistics() {</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public int getId(){
+<b class="fc">&nbsp;        return this.id;</b>
+&nbsp;    }
+&nbsp;    public Team getTeam() {
+<b class="fc">&nbsp;        return team;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public void setTeam(Team team) {
+<b class="nc">&nbsp;        this.team = team;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public double getObjProgress() {
+<b class="fc">&nbsp;        return obj_progress;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public void setObjProgress(double obj_progress) {
+<b class="nc">&nbsp;        this.obj_progress = obj_progress;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public int getTeamKills() {
+<b class="fc">&nbsp;        return team_kills;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public void incTeamKills() {
+<b class="nc">&nbsp;        this.team_kills++;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public int getTeamDeaths() {
+<b class="fc">&nbsp;        return team_deaths;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public void incTeamDeaths() {
+<b class="nc">&nbsp;        this.team_deaths++;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public int getNumVictories() {
+<b class="fc">&nbsp;        return num_victories;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public void setNumVictories(int num_victories) {
+<b class="nc">&nbsp;        this.num_victories = num_victories;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public int getNumDefeats() {
+<b class="fc">&nbsp;        return num_defeats;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public void setNumDefeats(int num_defeats) {
+<b class="nc">&nbsp;        this.num_defeats = num_defeats;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public boolean isDeleted() {
+<b class="fc">&nbsp;        return deleted;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public void delete() {
+<b class="nc">&nbsp;        this.deleted = true;</b>
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2023-12-06 14:48</div>
+</div>
+</body>
+</html>

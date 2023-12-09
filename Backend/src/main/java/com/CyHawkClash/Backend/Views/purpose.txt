@@ -1,0 +1,3 @@
+This folder is meant for holding java class files for all the api methods of the final project.
+
+This folder also will contain files that will contain api handlers and other functions.

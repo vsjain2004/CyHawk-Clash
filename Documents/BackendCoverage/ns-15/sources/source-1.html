@@ -1,0 +1,329 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=windows-1252"> 
+  <title>Coverage Report > UserWeapon</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">com.CyHawkClash.Backend.Models.UserWeapon</a>
+</div>
+
+<h1>Coverage Summary for Class: UserWeapon (com.CyHawkClash.Backend.Models.UserWeapon)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">UserWeapon</td>
+<td class="coverageStat">
+  <span class="percent">
+    26.7%
+  </span>
+  <span class="absValue">
+    (8/30)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    62.1%
+  </span>
+  <span class="absValue">
+    (36/58)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">UserWeapon$HibernateInstantiator$e9Jo41i2</td>
+  </tr>
+  <tr>
+    <td class="name">UserWeapon$HibernateInstantiator$IObJNwGN</td>
+  </tr>
+  <tr>
+    <td class="name">UserWeapon$HibernateProxy$NpiQIHML</td>
+  </tr>
+  <tr>
+    <td class="name">UserWeapon$HibernateProxy$uiyXaVxa</td>
+  </tr>
+<tr>
+  <td class="name"><strong>Total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    26.7%
+  </span>
+  <span class="absValue">
+    (8/30)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    62.1%
+  </span>
+  <span class="absValue">
+    (36/58)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package com.CyHawkClash.Backend.Models.UserWeapon;
+&nbsp;
+&nbsp;import com.CyHawkClash.Backend.Models.User.User;
+&nbsp;import com.CyHawkClash.Backend.Models.Weapon.Weapon;
+&nbsp;import jakarta.persistence.*;
+&nbsp;
+&nbsp;import java.util.HashMap;
+&nbsp;import java.util.Map;
+&nbsp;
+&nbsp;@Entity
+&nbsp;public class UserWeapon {
+&nbsp;    @Id
+&nbsp;    @GeneratedValue(strategy = GenerationType.IDENTITY)
+&nbsp;    private int id;
+&nbsp;
+&nbsp;    @ManyToOne
+&nbsp;    @JoinColumn(name = &quot;user_id&quot;)
+&nbsp;    private User user;
+&nbsp;
+&nbsp;    @ManyToOne
+&nbsp;    @JoinColumn(name = &quot;weapon_id&quot;)
+&nbsp;    private Weapon weapon;
+&nbsp;
+&nbsp;    @Column(name = &quot;fire_rate&quot;)
+&nbsp;    private int fire_rate;
+&nbsp;
+&nbsp;    @Column(name =&quot;num_bullets&quot;)
+&nbsp;    private int num_bullets;
+&nbsp;
+&nbsp;    @Column(name = &quot;num_max_bullets&quot;)
+&nbsp;    private int num_max_bullets;
+&nbsp;
+&nbsp;    @Column(name = &quot;bullet_size&quot;)
+&nbsp;    private int bullet_size;
+&nbsp;
+&nbsp;    @Column(name = &quot;reload_rate&quot;)
+&nbsp;    private int reload_rate;
+&nbsp;
+&nbsp;    @Column(name = &quot;weapon_range&quot;)
+&nbsp;    private int weapon_range;
+&nbsp;
+&nbsp;    @Column(name = &quot;bullet_speed&quot;)
+&nbsp;    private int bullet_speed;
+&nbsp;
+&nbsp;    @Column(name = &quot;weapon_spread&quot;)
+&nbsp;    private double weapon_spread;
+&nbsp;
+&nbsp;    @Column(name = &quot;damage&quot;)
+&nbsp;    private int damage;
+&nbsp;
+&nbsp;    @Column(name = &quot;accuracy&quot;)
+&nbsp;    private double accuracy;
+&nbsp;
+&nbsp;    @Column(name = &quot;equipped&quot;)
+&nbsp;    private boolean equipped;
+&nbsp;
+&nbsp;    @Column(name = &quot;num_kills&quot;)
+&nbsp;    private int num_kills;
+&nbsp;
+<b class="fc">&nbsp;    public UserWeapon(User user, Weapon weapon) {</b>
+<b class="fc">&nbsp;        this.user = user;</b>
+<b class="fc">&nbsp;        this.weapon = weapon;</b>
+<b class="fc">&nbsp;        this.fire_rate = weapon.getBase_fire_rate();</b>
+<b class="fc">&nbsp;        this.num_bullets = weapon.getBase_max_bullets();</b>
+<b class="fc">&nbsp;        this.num_max_bullets = weapon.getBase_max_bullets();</b>
+<b class="fc">&nbsp;        this.bullet_size = weapon.getBase_bullet_size();</b>
+<b class="fc">&nbsp;        this.reload_rate = weapon.getBase_reload_rate();</b>
+<b class="fc">&nbsp;        this.weapon_range = weapon.getBase_range();</b>
+<b class="fc">&nbsp;        this.bullet_speed = weapon.getBase_bullet_speed();</b>
+<b class="fc">&nbsp;        this.damage = weapon.getBase_damage();</b>
+<b class="fc">&nbsp;        this.accuracy = weapon.getBase_accuracy();</b>
+<b class="fc">&nbsp;        this.weapon_spread = weapon.getBase_spread();</b>
+<b class="fc">&nbsp;        this.equipped = false;</b>
+<b class="fc">&nbsp;        this.num_kills = 0;</b>
+&nbsp;    }
+&nbsp;
+<b class="fc">&nbsp;    public UserWeapon() {}</b>
+&nbsp;
+&nbsp;    public int getId() {
+<b class="nc">&nbsp;        return id;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public User getUser() {
+<b class="nc">&nbsp;        return user;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public Weapon getWeapon() {
+<b class="nc">&nbsp;        return weapon;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public int getFire_rate() {
+<b class="nc">&nbsp;        return fire_rate;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public void setFire_rate(int fire_rate) {
+<b class="nc">&nbsp;        this.fire_rate = fire_rate;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public int getNum_bullets() {
+<b class="nc">&nbsp;        return num_bullets;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public void setNum_bullets(int num_bullets) {
+<b class="nc">&nbsp;        this.num_bullets = num_bullets;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public int getNum_max_bullets() {
+<b class="nc">&nbsp;        return num_max_bullets;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public void setNum_max_bullets(int num_max_bullets) {
+<b class="nc">&nbsp;        this.num_max_bullets = num_max_bullets;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public int getBullet_size() {
+<b class="fc">&nbsp;        return bullet_size;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public void setBullet_size(int bullet_size) {
+<b class="nc">&nbsp;        this.bullet_size = bullet_size;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public int getReload_rate() {
+<b class="nc">&nbsp;        return reload_rate;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public void setReload_rate(int reload_rate) {
+<b class="nc">&nbsp;        this.reload_rate = reload_rate;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public int getWeapon_range() {
+<b class="fc">&nbsp;        return weapon_range;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public void setWeapon_range(int weapon_range) {
+<b class="nc">&nbsp;        this.weapon_range = weapon_range;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public int getBullet_speed() {
+<b class="fc">&nbsp;        return bullet_speed;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public void setBullet_speed(int bullet_speed) {
+<b class="nc">&nbsp;        this.bullet_speed = bullet_speed;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public double getWeapon_spread() {
+<b class="nc">&nbsp;        return weapon_spread;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public void setWeapon_spread(double weapon_spread) {
+<b class="nc">&nbsp;        this.weapon_spread = weapon_spread;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public int getDamage() {
+<b class="fc">&nbsp;        return damage;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public void setDamage(int damage) {
+<b class="nc">&nbsp;        this.damage = damage;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public double getAccuracy() {
+<b class="nc">&nbsp;        return accuracy;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public void setAccuracy(double accuracy) {
+<b class="nc">&nbsp;        this.accuracy = accuracy;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public boolean isEquipped() {
+<b class="nc">&nbsp;        return equipped;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public void setEquipped(boolean equipped) {
+<b class="fc">&nbsp;        this.equipped = equipped;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public int getNum_kills() {
+<b class="nc">&nbsp;        return num_kills;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public void setNum_kills(int num_kills) {
+<b class="nc">&nbsp;        this.num_kills = num_kills;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public Map&lt;String, String&gt; serialize(){
+<b class="fc">&nbsp;        Map&lt;String, String&gt; serialized = new HashMap&lt;&gt;();</b>
+&nbsp;
+<b class="fc">&nbsp;        serialized.put(&quot;weapon_id&quot;, Integer.toString(this.weapon.getId()));</b>
+<b class="fc">&nbsp;        serialized.put(&quot;name&quot;, weapon.getWeapon_name());</b>
+<b class="fc">&nbsp;        serialized.put(&quot;fire_rate&quot;, Integer.toString(this.fire_rate));</b>
+<b class="fc">&nbsp;        serialized.put(&quot;num_max_bullets&quot;, Integer.toString(this.num_max_bullets));</b>
+<b class="fc">&nbsp;        serialized.put(&quot;bullet_size&quot;, Integer.toString(this.bullet_size));</b>
+<b class="fc">&nbsp;        serialized.put(&quot;reload_rate&quot;, Integer.toString(this.reload_rate));</b>
+<b class="fc">&nbsp;        serialized.put(&quot;weapon_range&quot;, Integer.toString(this.weapon_range));</b>
+<b class="fc">&nbsp;        serialized.put(&quot;bullet_speed&quot;, Integer.toString(this.bullet_speed));</b>
+<b class="fc">&nbsp;        serialized.put(&quot;weapon_spread&quot;, Double.toString(this.weapon_spread));</b>
+<b class="fc">&nbsp;        serialized.put(&quot;damage&quot;, Integer.toString(this.damage));</b>
+<b class="fc">&nbsp;        serialized.put(&quot;accuracy&quot;, Double.toString(this.accuracy));</b>
+<b class="fc">&nbsp;        serialized.put(&quot;equipped&quot;, Boolean.toString(this.equipped));</b>
+<b class="fc">&nbsp;        serialized.put(&quot;num_kills&quot;, Integer.toString(this.num_kills));</b>
+&nbsp;
+<b class="fc">&nbsp;        return serialized;</b>
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2023-12-06 14:48</div>
+</div>
+</body>
+</html>

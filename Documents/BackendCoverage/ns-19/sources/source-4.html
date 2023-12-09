@@ -1,0 +1,588 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=windows-1252"> 
+  <title>Coverage Report > PostController</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">com.CyHawkClash.Backend.Views</a>
+</div>
+
+<h1>Coverage Summary for Class: PostController (com.CyHawkClash.Backend.Views)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">PostController</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    77.8%
+  </span>
+  <span class="absValue">
+    (7/9)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    59.8%
+  </span>
+  <span class="absValue">
+    (107/179)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package com.CyHawkClash.Backend.Views;
+&nbsp;
+&nbsp;import com.CyHawkClash.Backend.Models.Attachment.Attachment;
+&nbsp;import com.CyHawkClash.Backend.Models.Attachment.AttachmentRepository;
+&nbsp;import com.CyHawkClash.Backend.Models.Bullet.Bullet;
+&nbsp;import com.CyHawkClash.Backend.Models.Bullet.BulletRepository;
+&nbsp;import com.CyHawkClash.Backend.Models.Game.Game;
+&nbsp;import com.CyHawkClash.Backend.Models.Game.GameRepository;
+&nbsp;import com.CyHawkClash.Backend.Models.GameMap.GameMap;
+&nbsp;import com.CyHawkClash.Backend.Models.GameMap.GameMapRepository;
+&nbsp;import com.CyHawkClash.Backend.Models.GameObjective.GameObjective;
+&nbsp;import com.CyHawkClash.Backend.Models.GameObjective.GameObjectiveRepository;
+&nbsp;import com.CyHawkClash.Backend.Models.GameStatistics.GameStatistics;
+&nbsp;import com.CyHawkClash.Backend.Models.GameStatistics.GameStatisticsRepository;
+&nbsp;import com.CyHawkClash.Backend.Models.Map.Map;
+&nbsp;import com.CyHawkClash.Backend.Models.Map.MapRepository;
+&nbsp;import com.CyHawkClash.Backend.Models.Moderator.Moderator;
+&nbsp;import com.CyHawkClash.Backend.Models.Moderator.ModeratorRepository;
+&nbsp;import com.CyHawkClash.Backend.Models.Objective.Objective;
+&nbsp;import com.CyHawkClash.Backend.Models.Objective.ObjectiveRepository;
+&nbsp;import com.CyHawkClash.Backend.Models.PlayerInGame.PlayerInGame;
+&nbsp;import com.CyHawkClash.Backend.Models.PlayerInGame.PlayerInGameRepository;
+&nbsp;import com.CyHawkClash.Backend.Models.PlayerInGameStatistics.PlayerInGameStatistics;
+&nbsp;import com.CyHawkClash.Backend.Models.PlayerInGameStatistics.PlayerInGameStatisticsRepository;
+&nbsp;import com.CyHawkClash.Backend.Models.Team.Team;
+&nbsp;import com.CyHawkClash.Backend.Models.Team.TeamRepository;
+&nbsp;import com.CyHawkClash.Backend.Models.TeamStatistics.TeamStatistics;
+&nbsp;import com.CyHawkClash.Backend.Models.TeamStatistics.TeamStatisticsRepository;
+&nbsp;import com.CyHawkClash.Backend.Models.User.User;
+&nbsp;import com.CyHawkClash.Backend.Models.User.UserRepository;
+&nbsp;import com.CyHawkClash.Backend.Models.UserWeapon.UserWeapon;
+&nbsp;import com.CyHawkClash.Backend.Models.UserWeapon.UserWeaponRepository;
+&nbsp;import com.CyHawkClash.Backend.Models.UserWeaponAttachment.UserWeaponAttachment;
+&nbsp;import com.CyHawkClash.Backend.Models.UserWeaponAttachment.UserWeaponAttachmentRepository;
+&nbsp;import com.CyHawkClash.Backend.Models.Weapon.Weapon;
+&nbsp;import com.CyHawkClash.Backend.Models.Weapon.WeaponRepository;
+&nbsp;import com.CyHawkClash.Backend.Models.WeaponAttachment.WeaponAttachmentRepository;
+&nbsp;
+&nbsp;
+&nbsp;import io.swagger.v3.oas.annotations.Operation;
+&nbsp;import io.swagger.v3.oas.annotations.media.Content;
+&nbsp;import io.swagger.v3.oas.annotations.media.ExampleObject;
+&nbsp;import io.swagger.v3.oas.annotations.media.Schema;
+&nbsp;import io.swagger.v3.oas.annotations.responses.ApiResponse;
+&nbsp;import io.swagger.v3.oas.annotations.responses.ApiResponses;
+&nbsp;import io.swagger.v3.oas.annotations.tags.Tag;
+&nbsp;import com.CyHawkClash.Backend.Models.dbfunc;
+&nbsp;import org.jose4j.json.internal.json_simple.JSONObject;
+&nbsp;import org.springframework.beans.factory.annotation.Autowired;
+&nbsp;import org.springframework.http.HttpHeaders;
+&nbsp;import org.springframework.http.ResponseEntity;
+&nbsp;import org.springframework.security.core.parameters.P;
+&nbsp;import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+&nbsp;import org.springframework.web.bind.annotation.*;
+&nbsp;
+&nbsp;import java.time.LocalDateTime;
+&nbsp;import java.util.*;
+&nbsp;
+&nbsp;@Tag(name = &quot;PostController&quot;, description = &quot;This controller holds all of the POST API&#39;s&quot;)
+&nbsp;@RestController
+<b class="fc">&nbsp;public class PostController {</b>
+&nbsp;
+<b class="fc">&nbsp;    private String success = &quot;{\&quot;message\&quot;:\&quot;success\&quot;}&quot;;</b>
+<b class="fc">&nbsp;    private String failure = &quot;{\&quot;message\&quot;:\&quot;failure\&quot;}&quot;;</b>
+&nbsp;
+&nbsp;    @Autowired
+&nbsp;    private AttachmentRepository attachmentRepository;
+&nbsp;
+&nbsp;    @Autowired
+&nbsp;    private GameRepository gameRepository;
+&nbsp;
+&nbsp;    @Autowired
+&nbsp;    private GameObjectiveRepository gameObjectiveRepository;
+&nbsp;
+&nbsp;    @Autowired
+&nbsp;    private GameMapRepository gameMapRepository;
+&nbsp;
+&nbsp;    @Autowired
+&nbsp;    private GameStatisticsRepository gameStatisticsRepository;
+&nbsp;
+&nbsp;    @Autowired
+&nbsp;    private MapRepository mapRepository;
+&nbsp;
+&nbsp;    @Autowired
+&nbsp;    private ModeratorRepository moderatorRepository;
+&nbsp;
+&nbsp;    @Autowired
+&nbsp;    private ObjectiveRepository objectiveRepository;
+&nbsp;
+&nbsp;    @Autowired
+&nbsp;    private PlayerInGameRepository playerInGameRepository;
+&nbsp;
+&nbsp;    @Autowired
+&nbsp;    private PlayerInGameStatisticsRepository playerInGameStatisticsRepository;
+&nbsp;
+&nbsp;    @Autowired
+&nbsp;    private TeamRepository teamRepository;
+&nbsp;
+&nbsp;    @Autowired
+&nbsp;    private TeamStatisticsRepository teamStatisticsRepository;
+&nbsp;
+&nbsp;    @Autowired
+&nbsp;    private UserRepository userRepository;
+&nbsp;
+&nbsp;    @Autowired
+&nbsp;    private UserWeaponRepository userWeaponRepository;
+&nbsp;
+&nbsp;    @Autowired
+&nbsp;    private UserWeaponAttachmentRepository userWeaponAttachmentRepository;
+&nbsp;
+&nbsp;    @Autowired
+&nbsp;    private WeaponRepository weaponRepository;
+&nbsp;
+&nbsp;    @Autowired
+&nbsp;    private BulletRepository bulletRepository;
+&nbsp;
+&nbsp;    @Operation(
+&nbsp;            summary = &quot;Creates a new User&quot;,
+&nbsp;            description = &quot;This POST creates a new User, verifies that the user has not already been created. This will create&quot; +
+&nbsp;                    &quot;an authentication token for user. This will be used to verify all API calls from here on out&quot;
+&nbsp;    )
+&nbsp;    @ApiResponses({
+&nbsp;            @ApiResponse(responseCode = &quot;200&quot;, content = {@Content(schema = @Schema(implementation = User.class))}),
+&nbsp;            @ApiResponse(responseCode = &quot;400&quot;, content = {@Content(examples = {
+&nbsp;                    @ExampleObject(value = &quot;{\&quot;message\&quot;:\&quot;failure\&quot;}&quot;)
+&nbsp;            })})
+&nbsp;    })
+&nbsp;
+&nbsp;    @PostMapping(&quot;/users&quot;)
+&nbsp;    public ResponseEntity&lt;Object&gt; newUser(@RequestBody java.util.Map&lt;String, String&gt; body) throws Exception{
+<b class="fc">&nbsp;        HttpHeaders headers = new HttpHeaders();</b>
+<b class="fc">&nbsp;        headers.add(&quot;Content-type&quot;, &quot;application/json&quot;);</b>
+&nbsp;
+<b class="fc">&nbsp;        if((body.get(&quot;first_name&quot;) == null) || (body.get(&quot;last_name&quot;) == null) || (body.get(&quot;email&quot;) == null) || (body.get(&quot;username&quot;) == null) || (body.get(&quot;password&quot;) == null)){</b>
+<b class="nc">&nbsp;            return new ResponseEntity&lt;&gt;(failure, headers, 400);</b>
+<b class="fc">&nbsp;        } else if((body.get(&quot;first_name&quot;).isEmpty()) || (body.get(&quot;last_name&quot;).isEmpty()) || (body.get(&quot;email&quot;).isEmpty()) || (body.get(&quot;username&quot;).isEmpty()) || (body.get(&quot;password&quot;).isEmpty())){</b>
+<b class="nc">&nbsp;            return new ResponseEntity&lt;&gt;(failure, headers, 400);</b>
+<b class="fc">&nbsp;        } else if((userRepository.findByUsernameAndDeleted(body.get(&quot;username&quot;), false) != null) || (userRepository.findByEmailAndDeleted(body.get(&quot;email&quot;), false) != null)){</b>
+<b class="nc">&nbsp;            return new ResponseEntity&lt;&gt;(failure, headers, 400);</b>
+<b class="fc">&nbsp;        } else if ((body.get(&quot;phone&quot;) != null) &amp;&amp; (userRepository.findByPhoneAndDeleted(body.get(&quot;phone&quot;), false) != null)) {</b>
+<b class="nc">&nbsp;            return new ResponseEntity&lt;&gt;(failure, headers, 400);</b>
+&nbsp;        }
+<b class="fc">&nbsp;        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(4);</b>
+<b class="fc">&nbsp;        User user = new User(body.get(&quot;first_name&quot;), body.get(&quot;last_name&quot;), body.get(&quot;email&quot;), body.get(&quot;phone&quot;), body.get(&quot;username&quot;), encoder.encode(body.get(&quot;password&quot;)));</b>
+<b class="fc">&nbsp;        userRepository.save(user);</b>
+<b class="fc">&nbsp;        UserWeapon userWeapon1 = new UserWeapon(user, weaponRepository.findById(2));</b>
+<b class="fc">&nbsp;        UserWeapon userWeapon2 = new UserWeapon(user, weaponRepository.findById(3));</b>
+<b class="fc">&nbsp;        UserWeapon userWeapon3 = new UserWeapon(user, weaponRepository.findById(4));</b>
+<b class="fc">&nbsp;        UserWeapon userWeapon4 = new UserWeapon(user, weaponRepository.findById(5));</b>
+<b class="fc">&nbsp;        UserWeapon userWeapon5 = new UserWeapon(user, weaponRepository.findById(6));</b>
+<b class="fc">&nbsp;        userWeapon2.setEquipped(true);</b>
+<b class="fc">&nbsp;        userWeaponRepository.save(userWeapon1);</b>
+<b class="fc">&nbsp;        userWeaponRepository.save(userWeapon2);</b>
+<b class="fc">&nbsp;        userWeaponRepository.save(userWeapon3);</b>
+<b class="fc">&nbsp;        userWeaponRepository.save(userWeapon4);</b>
+<b class="fc">&nbsp;        userWeaponRepository.save(userWeapon5);</b>
+<b class="fc">&nbsp;        return getObjectResponseEntity(headers, user);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Operation(
+&nbsp;            summary = &quot;Logs a user in&quot;,
+&nbsp;            description = &quot;Handles a user trying to log in to their account. Verifies the users credentials and gives&quot;
+&nbsp;            + &quot;them an authentication token&quot;
+&nbsp;    )
+&nbsp;    @ApiResponses({
+&nbsp;            @ApiResponse(responseCode = &quot;200&quot;, content = {@Content(schema = @Schema(implementation = User.class))}),
+&nbsp;            @ApiResponse(responseCode = &quot;403&quot;, content = {@Content(examples = {
+&nbsp;                    @ExampleObject(value = &quot;{\&quot;message\&quot;:\&quot;failure\&quot;}&quot;)
+&nbsp;            })})
+&nbsp;    })
+&nbsp;    @PostMapping(&quot;/login&quot;)
+&nbsp;    public ResponseEntity&lt;Object&gt; login(@RequestBody java.util.Map&lt;String, String&gt; body) throws Exception {
+<b class="fc">&nbsp;        HttpHeaders headers = new HttpHeaders();</b>
+<b class="fc">&nbsp;        headers.add(&quot;Content-type&quot;, &quot;application/json&quot;);</b>
+&nbsp;
+<b class="fc">&nbsp;        if((body.get(&quot;username&quot;) == null) || (body.get(&quot;password&quot;) == null) || (body.get(&quot;username&quot;).isEmpty()) || (body.get(&quot;password&quot;).isEmpty())){</b>
+<b class="nc">&nbsp;            return new ResponseEntity&lt;&gt;(failure, headers, 403);</b>
+&nbsp;        }
+&nbsp;
+<b class="fc">&nbsp;        User user = userRepository.findByUsernameAndDeleted(body.get(&quot;username&quot;), false);</b>
+<b class="fc">&nbsp;        if(user == null){</b>
+<b class="fc">&nbsp;            return new ResponseEntity&lt;&gt;(failure, headers, 403);</b>
+&nbsp;        }
+&nbsp;
+<b class="fc">&nbsp;        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(4);</b>
+<b class="fc">&nbsp;        if(!encoder.matches(body.get(&quot;password&quot;), user.getPassword())){</b>
+<b class="fc">&nbsp;            return new ResponseEntity&lt;&gt;(failure, headers, 403);</b>
+&nbsp;        }
+&nbsp;
+<b class="fc">&nbsp;        return getObjectResponseEntity(headers, user);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    private ResponseEntity&lt;Object&gt; getObjectResponseEntity(HttpHeaders headers, User user) throws Exception {
+<b class="fc">&nbsp;        java.util.Map&lt;String, Object&gt; jwtmap = new HashMap&lt;&gt;();</b>
+<b class="fc">&nbsp;        jwtmap.put(&quot;\&quot;id\&quot;&quot;, user.getId());</b>
+<b class="fc">&nbsp;        jwtmap.put(&quot;\&quot;exp\&quot;&quot;, String.format(&quot;\&quot;%s\&quot;&quot;, LocalDateTime.now().plusDays(1)));</b>
+<b class="fc">&nbsp;        String token = response.encode_jwt(jwtmap);</b>
+<b class="fc">&nbsp;        headers.add(&quot;Authorization&quot;, token);</b>
+<b class="fc">&nbsp;        return new ResponseEntity&lt;&gt;(user, headers, 200);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;    @Operation(
+&nbsp;            summary = &quot;Creates a PlayerInGame entry&quot;,
+&nbsp;            description = &quot;Based on users Authentication token and team we will create a PlayerInGame object&quot;
+&nbsp;    )
+&nbsp;    @ApiResponses({
+&nbsp;            @ApiResponse(responseCode = &quot;200&quot;, content = {@Content(examples = {
+&nbsp;                    @ExampleObject(value = &quot;{\&quot;message\&quot;:\&quot;success\&quot;}&quot;)
+&nbsp;            })}),
+&nbsp;            @ApiResponse(responseCode = &quot;400&quot;, content = {@Content(examples = {
+&nbsp;                    @ExampleObject(value = &quot;{\&quot;message\&quot;:\&quot;failure\&quot;}&quot;)
+&nbsp;            })}),
+&nbsp;            @ApiResponse(responseCode = &quot;403&quot;, content = {@Content(examples = {
+&nbsp;                    @ExampleObject(name = &quot;Invalid JWT&quot;, value = &quot;\&quot;User not Registered\&quot;&quot;),
+&nbsp;                    @ExampleObject(name = &quot;Other error&quot;, value = &quot;\&quot;User is logged out or not Registered\&quot;&quot;)
+&nbsp;            })})
+&nbsp;    })
+&nbsp;    @PostMapping(&quot;/pigs&quot;)
+&nbsp;    public ResponseEntity&lt;Object&gt; newPig(@RequestBody java.util.Map&lt;String, String&gt; body, @RequestHeader(&quot;Authorization&quot;) String token) throws Exception{
+<b class="fc">&nbsp;        HttpHeaders headers = new HttpHeaders();</b>
+<b class="fc">&nbsp;        headers.add(&quot;Content-type&quot;, &quot;application/text&quot;);</b>
+&nbsp;
+<b class="fc">&nbsp;        int id = Integer.parseInt(response.decode_jwt(token));</b>
+<b class="fc">&nbsp;        if(body == null){</b>
+<b class="nc">&nbsp;            return new ResponseEntity&lt;&gt;(failure, headers, 400);</b>
+&nbsp;        }
+<b class="fc">&nbsp;        if(playerInGameRepository.findByUserAndDeleted(userRepository.findById(id), false) != null){</b>
+<b class="fc">&nbsp;            return new ResponseEntity&lt;&gt;(&quot;{\&quot;message\&quot;:\&quot;User already has a PIG\&quot;}&quot;, headers, 400);</b>
+&nbsp;        }
+&nbsp;        PlayerInGame pig;
+<b class="nc">&nbsp;        User user = userRepository.findById(id);</b>
+<b class="nc">&nbsp;        Game game = gameRepository.findById(Integer.parseInt(body.get(&quot;game_id&quot;)));</b>
+&nbsp;        //We still need to receive the team from the Frontend. True for Cyclones, False for Hawkeyes
+<b class="nc">&nbsp;        Team team0 = teamRepository.findByGameAndTeamAndDeleted(game, false, false);</b>
+<b class="nc">&nbsp;        Team team1 = teamRepository.findByGameAndTeamAndDeleted(game, true, false);</b>
+<b class="nc">&nbsp;        Collection&lt;PlayerInGame&gt; pig0 = playerInGameRepository.findByTeam(team0);</b>
+<b class="nc">&nbsp;        Collection&lt;PlayerInGame&gt; pig1 = playerInGameRepository.findByTeam(team1);</b>
+<b class="nc">&nbsp;        if(pig0.size() &gt; pig1.size()){</b>
+<b class="nc">&nbsp;            pig = new PlayerInGame(user,team1);</b>
+<b class="nc">&nbsp;        } else if (pig1.size() &gt; pig0.size()) {</b>
+<b class="nc">&nbsp;            pig = new PlayerInGame(user,team0);</b>
+&nbsp;        } else {
+<b class="nc">&nbsp;            Random random = new Random(0);</b>
+<b class="nc">&nbsp;            int team = random.nextInt() % 2;</b>
+<b class="nc">&nbsp;            if(team == 0){</b>
+<b class="nc">&nbsp;                pig = new PlayerInGame(user,team0);</b>
+&nbsp;            } else {
+<b class="nc">&nbsp;                pig = new PlayerInGame(user,team1);</b>
+&nbsp;            }
+&nbsp;        }
+&nbsp;
+&nbsp;
+&nbsp;
+<b class="nc">&nbsp;        playerInGameRepository.save(pig);</b>
+&nbsp;
+<b class="nc">&nbsp;        PlayerInGameStatistics pigStats = new PlayerInGameStatistics(pig, 100, 0, 0);</b>
+&nbsp;
+<b class="nc">&nbsp;        playerInGameStatisticsRepository.save(pigStats);</b>
+<b class="nc">&nbsp;        return new ResponseEntity&lt;&gt;(success, headers, 200);</b>
+&nbsp;
+&nbsp;    }
+&nbsp;
+&nbsp;//    @Operation(
+&nbsp;//            summary = &quot;Create a new UserWeapon&quot;,
+&nbsp;//            description = &quot;Based on the authentication token, and weapon_id&quot; +
+&nbsp;//                    &quot;a new UserWeapon will be created&quot;
+&nbsp;//    )
+&nbsp;//    @ApiResponses({
+&nbsp;//            @ApiResponse(responseCode = &quot;200&quot;, content = {@Content(examples = {
+&nbsp;//                    @ExampleObject(value = &quot;{\&quot;message\&quot;:\&quot;success\&quot;}&quot;)
+&nbsp;//            })}),
+&nbsp;//            @ApiResponse(responseCode = &quot;400&quot;, content = {@Content(examples = {
+&nbsp;//                    @ExampleObject(value = &quot;{\&quot;message\&quot;:\&quot;failure\&quot;}&quot;)
+&nbsp;//            })}),
+&nbsp;//            @ApiResponse(responseCode = &quot;403&quot;, content = {@Content(examples = {
+&nbsp;//                    @ExampleObject(name = &quot;Invalid JWT&quot;, value = &quot;\&quot;User not Registered\&quot;&quot;),
+&nbsp;//                    @ExampleObject(name = &quot;Other error&quot;, value = &quot;\&quot;User is logged out or not Registered\&quot;&quot;)
+&nbsp;//            })})
+&nbsp;//    })
+&nbsp;//    @PostMapping(&quot;/user_weapons&quot;)
+&nbsp;//    public ResponseEntity&lt;Object&gt; createNewUserWeapon(@RequestBody java.util.Map&lt;String, String&gt; body, @RequestHeader(&quot;Authorization&quot;) String token) throws Exception{
+<b class="nc">&nbsp;//        HttpHeaders headers = new HttpHeaders();</b>
+<b class="nc">&nbsp;//        headers.add(&quot;Content-type&quot;, &quot;application/text&quot;);</b>
+&nbsp;//
+<b class="nc">&nbsp;//        int id = Integer.parseInt(response.decode_jwt(token));</b>
+<b class="nc">&nbsp;//        if(body == null){</b>
+<b class="nc">&nbsp;//            return new ResponseEntity&lt;&gt;(failure, headers, 400);</b>
+&nbsp;//        }
+&nbsp;//
+<b class="nc">&nbsp;//        User user = userRepository.findById(id);</b>
+&nbsp;//
+<b class="nc">&nbsp;//        Weapon weapon = weaponRepository.findById(Integer.parseInt(body.get(&quot;weapon_id&quot;)));</b>
+<b class="nc">&nbsp;//        UserWeapon userWeapon = new UserWeapon(user, weapon);</b>
+<b class="nc">&nbsp;//        userWeaponRepository.save(userWeapon);</b>
+&nbsp;//
+<b class="nc">&nbsp;//        return new ResponseEntity&lt;&gt;(success, headers, 200);</b>
+&nbsp;//    }
+&nbsp;
+&nbsp;
+&nbsp;    @Operation(
+&nbsp;            summary = &quot;Create objects that are needed when a Game is created&quot;,
+&nbsp;            description = &quot;Based on the authentication token, max_players, obj_id, and team_id&quot; +
+&nbsp;                    &quot;a Moderator object will be created, a Game object will be created, a GameObjective object&quot; +
+&nbsp;                    &quot;will be created, a GameMap object will be created, and finally two Team objects will be created.&quot;
+&nbsp;    )
+&nbsp;    @ApiResponses({
+&nbsp;            @ApiResponse(responseCode = &quot;200&quot;, content = {@Content(examples = {
+&nbsp;                    @ExampleObject(value = &quot;{&quot; +
+&nbsp;                            &quot;\&quot;game_id\&quot; : 0&quot; +
+&nbsp;                            &quot;}&quot;)
+&nbsp;            })}),
+&nbsp;            @ApiResponse(responseCode = &quot;400&quot;, content = {@Content(schema = @Schema())})
+&nbsp;    })
+&nbsp;    @PostMapping(&quot;/games&quot;)
+&nbsp;    public ResponseEntity&lt;Object&gt; createNewGame(@RequestBody java.util.Map&lt;String, String&gt; body, @RequestHeader(&quot;Authorization&quot;) String token) throws Exception {
+<b class="fc">&nbsp;        HttpHeaders headers = new HttpHeaders();</b>
+<b class="fc">&nbsp;        headers.add(&quot;Content-type&quot;, &quot;application/json&quot;);</b>
+&nbsp;
+<b class="fc">&nbsp;        int id = Integer.parseInt(response.decode_jwt(token));</b>
+<b class="fc">&nbsp;        User user = userRepository.findById(id);</b>
+<b class="fc">&nbsp;        if(user == null){</b>
+<b class="nc">&nbsp;            return new ResponseEntity&lt;&gt;(failure, headers, 400);</b>
+&nbsp;        }
+&nbsp;
+&nbsp;        //Checks if Keys are missing
+<b class="fc">&nbsp;        if(body.get(&quot;max_players&quot;) == null || body.get(&quot;obj_id&quot;) == null || body.get(&quot;map_id&quot;) == null){</b>
+<b class="nc">&nbsp;            return new ResponseEntity&lt;&gt;(failure, headers, 400);</b>
+&nbsp;        }
+&nbsp;        //Checks if keys are empty
+<b class="fc">&nbsp;        if(body.get(&quot;max_players&quot;).isEmpty() || body.get(&quot;obj_id&quot;).isEmpty() || body.get(&quot;map_id&quot;).isEmpty()){</b>
+<b class="nc">&nbsp;            return new ResponseEntity&lt;&gt;(failure, headers, 400);</b>
+&nbsp;
+&nbsp;        }
+&nbsp;
+<b class="fc">&nbsp;        if(moderatorRepository.findByUserAndDeleted(user, false) != null || playerInGameRepository.findByUserAndDeleted(user, false) != null){</b>
+<b class="nc">&nbsp;            return new ResponseEntity&lt;&gt;(&quot;{\&quot;message\&quot;:\&quot;User is already a moderator, or PIG\&quot;}&quot;, headers, 400);</b>
+&nbsp;        }
+&nbsp;        //Get user to make a Moderator
+<b class="fc">&nbsp;        Moderator mod = new Moderator(user);</b>
+<b class="fc">&nbsp;        moderatorRepository.save(mod);</b>
+&nbsp;
+&nbsp;        //Get playersPerTeam from max_players to create a Game
+<b class="fc">&nbsp;        int playersPerTeam = (Integer.parseInt(body.get(&quot;max_players&quot;)))/2;</b>
+<b class="fc">&nbsp;        Game game = new Game(mod, playersPerTeam, true);</b>
+<b class="fc">&nbsp;        gameRepository.save(game);</b>
+&nbsp;
+&nbsp;        //Get obj_id to create GameObjective
+<b class="fc">&nbsp;        Objective obj = objectiveRepository.findById(Integer.parseInt(body.get(&quot;obj_id&quot;)));</b>
+<b class="fc">&nbsp;        GameObjective gameObjective = new GameObjective(game, obj);</b>
+<b class="fc">&nbsp;        gameObjectiveRepository.save(gameObjective);</b>
+&nbsp;
+&nbsp;        //Get map_id to create GameMap
+<b class="fc">&nbsp;        Map map = mapRepository.findById(Integer.parseInt(body.get(&quot;map_id&quot;)));</b>
+<b class="fc">&nbsp;        String mapStr = map.getMap();</b>
+<b class="fc">&nbsp;        GameMap gameMap = new GameMap(game, map, mapStr);</b>
+<b class="fc">&nbsp;        gameMapRepository.save(gameMap);</b>
+&nbsp;        //Create Teams for the game
+<b class="fc">&nbsp;        Team redTeam = new Team(game, true);</b>
+<b class="fc">&nbsp;        Team blackTeam = new Team(game, false);</b>
+<b class="fc">&nbsp;        teamRepository.save(redTeam);</b>
+<b class="fc">&nbsp;        teamRepository.save(blackTeam);</b>
+&nbsp;
+<b class="fc">&nbsp;        PlayerInGame pig = new PlayerInGame(user, redTeam);</b>
+<b class="fc">&nbsp;        playerInGameRepository.save(pig);</b>
+&nbsp;
+<b class="fc">&nbsp;        PlayerInGameStatistics pigStats = new PlayerInGameStatistics(pig, 100, 0, 0);</b>
+<b class="fc">&nbsp;        playerInGameStatisticsRepository.save(pigStats);</b>
+<b class="fc">&nbsp;</b>
+<b class="fc">&nbsp;        TeamStatistics redTeamStats = new TeamStatistics(redTeam);</b>
+<b class="fc">&nbsp;        TeamStatistics blackTeamStats = new TeamStatistics(blackTeam);</b>
+<b class="fc">&nbsp;        teamStatisticsRepository.save(redTeamStats);</b>
+<b class="fc">&nbsp;        teamStatisticsRepository.save(blackTeamStats);</b>
+&nbsp;
+<b class="fc">&nbsp;        GameStatistics gameStatistics = new GameStatistics(game);</b>
+<b class="fc">&nbsp;        gameStatisticsRepository.save(gameStatistics);</b>
+<b class="fc">&nbsp;</b>
+<b class="fc">&nbsp;        java.util.Map&lt;String, Integer&gt; gameSuccess = new HashMap&lt;&gt;();</b>
+<b class="fc">&nbsp;</b>
+<b class="fc">&nbsp;        gameSuccess.put(&quot;game_id&quot;, game.getId());</b>
+&nbsp;
+<b class="fc">&nbsp;        return new ResponseEntity&lt;&gt;(gameSuccess, headers, 200);</b>
+&nbsp;
+&nbsp;    }
+&nbsp;
+&nbsp;//    @Operation(
+&nbsp;//            summary = &quot;Creates a UserWeaponAttachment object&quot;,
+&nbsp;//            description = &quot;Based on the UserWeapon id and Attachment id this will create a UserWeaponAttachment object&quot;
+&nbsp;//    )
+&nbsp;//    @ApiResponses({
+&nbsp;//            @ApiResponse(responseCode = &quot;200&quot;, content = {@Content(examples = {
+&nbsp;//                    @ExampleObject(value = &quot;[&quot; +
+&nbsp;//                            &quot;{&quot; +
+&nbsp;//                            &quot;\&quot;id\&quot; : 0,&quot; +
+&nbsp;//                            &quot;\&quot;name\&quot; : \&quot;string\&quot;,&quot; +
+&nbsp;//                            &quot;\&quot;fire_rate\&quot; : 0,&quot; +
+&nbsp;//                            &quot;\&quot;num_max_bullets\&quot; : 0,&quot; +
+&nbsp;//                            &quot;\&quot;bullet_size\&quot; : 0,&quot; +
+&nbsp;//                            &quot;\&quot;reload_rate\&quot; : 0,&quot; +
+&nbsp;//                            &quot;\&quot;weapon_range\&quot; : 0,&quot; +
+&nbsp;//                            &quot;\&quot;bullet_speed\&quot; : 0,&quot; +
+&nbsp;//                            &quot;\&quot;damage\&quot; : 0,&quot; +
+&nbsp;//                            &quot;\&quot;accuracy\&quot; : 0&quot; +
+&nbsp;//                            &quot;}&quot; +
+&nbsp;//                            &quot;]&quot;)
+&nbsp;//            })}),
+&nbsp;//            @ApiResponse(responseCode = &quot;400&quot;, content = {@Content(schema = @Schema())})
+<b class="nc">&nbsp;//    })</b>
+<b class="nc">&nbsp;//    @PostMapping(&quot;/user_weapon_attachments&quot;)</b>
+&nbsp;//    public ResponseEntity&lt;Object&gt; createUserWeaponAttachment(@RequestBody Collection&lt;java.util.Map&lt;String, String&gt;&gt; body){
+<b class="nc">&nbsp;//        HttpHeaders headers = new HttpHeaders();</b>
+<b class="nc">&nbsp;//        headers.add(&quot;Content-type&quot;, &quot;application/json&quot;);</b>
+&nbsp;//
+<b class="nc">&nbsp;//        if(body.iterator().next().get(&quot;user_weapon_id&quot;) == null || body.iterator().next().get(&quot;attachment_id&quot;) == null){</b>
+<b class="nc">&nbsp;//            return new ResponseEntity&lt;&gt;(failure, headers, 400);</b>
+&nbsp;//        }
+&nbsp;//        if(body.iterator().next().get(&quot;user_weapon_id&quot;).isEmpty() || body.iterator().next().get(&quot;attachment_id&quot;).isEmpty()){
+<b class="nc">&nbsp;//            return new ResponseEntity&lt;&gt;(failure, headers, 400);</b>
+<b class="nc">&nbsp;//        }</b>
+&nbsp;//
+<b class="nc">&nbsp;//        UserWeapon userWeapon = userWeaponRepository.findById(Integer.parseInt(body.iterator().next().get(&quot;user_weapon_id&quot;)));</b>
+<b class="nc">&nbsp;//        Attachment attachment = attachmentRepository.findById(Integer.parseInt(body.iterator().next().get(&quot;attachment_id&quot;)));</b>
+&nbsp;//
+<b class="nc">&nbsp;//        UserWeaponAttachment userWeaponAttachment = new UserWeaponAttachment(userWeapon, attachment);</b>
+<b class="nc">&nbsp;//        userWeaponAttachmentRepository.save(userWeaponAttachment);</b>
+<b class="nc">&nbsp;//</b>
+<b class="nc">&nbsp;//        Collection&lt;java.util.Map&lt;String,String&gt;&gt; userWeaponAttachments = new ArrayList&lt;&gt;();</b>
+<b class="nc">&nbsp;//        Collection&lt;UserWeaponAttachment&gt; userWeaponAttachmentCollection = userWeaponAttachmentRepository.findByUserWeapon(userWeapon);</b>
+&nbsp;//        for(UserWeaponAttachment userWeapAtt : userWeaponAttachmentCollection){
+&nbsp;//            userWeaponAttachments.add(userWeapAtt.serialize());
+&nbsp;//        }
+<b class="nc">&nbsp;//</b>
+&nbsp;//
+&nbsp;//
+&nbsp;//        return new ResponseEntity&lt;&gt;(userWeaponAttachments, headers, 200);
+&nbsp;//
+&nbsp;//    }
+<b class="nc">&nbsp;</b>
+<b class="nc">&nbsp;    @PostMapping(&quot;/bullets&quot;)</b>
+&nbsp;    public ResponseEntity&lt;Object&gt; create_bullet(@RequestHeader(&quot;Authorization&quot;) String token, @RequestBody java.util.Map&lt;String, String&gt; body) throws Exception {
+<b class="fc">&nbsp;        HttpHeaders headers = new HttpHeaders();</b>
+<b class="fc">&nbsp;        headers.add(&quot;Content-type&quot;, &quot;application/json&quot;);</b>
+<b class="nc">&nbsp;</b>
+<b class="fc">&nbsp;        if(body.get(&quot;x&quot;) == null || body.get(&quot;y&quot;) == null || body.get(&quot;angle&quot;) == null){</b>
+<b class="nc">&nbsp;            return new ResponseEntity&lt;&gt;(failure, headers, 400);</b>
+<b class="fc">&nbsp;        } else if (body.get(&quot;x&quot;).isEmpty() || body.get(&quot;y&quot;).isEmpty() || body.get(&quot;angle&quot;).isEmpty()) {</b>
+<b class="nc">&nbsp;            return new ResponseEntity&lt;&gt;(failure, headers, 400);</b>
+<b class="nc">&nbsp;        }</b>
+&nbsp;
+<b class="fc">&nbsp;        int id = Integer.parseInt(response.decode_jwt(token));</b>
+<b class="fc">&nbsp;        User user = userRepository.findById(id);</b>
+&nbsp;
+<b class="fc">&nbsp;        if(user == null){</b>
+<b class="nc">&nbsp;            return new ResponseEntity&lt;&gt;(failure, headers, 400);</b>
+&nbsp;        }
+<b class="nc">&nbsp;</b>
+<b class="fc">&nbsp;        PlayerInGame playerInGame = playerInGameRepository.findByUserAndDeleted(user, false);</b>
+&nbsp;
+<b class="fc">&nbsp;        if(playerInGame == null){</b>
+<b class="nc">&nbsp;            return new ResponseEntity&lt;&gt;(failure, headers, 400);</b>
+<b class="nc">&nbsp;        }</b>
+<b class="nc">&nbsp;</b>
+<b class="fc">&nbsp;        UserWeapon userWeapon = userWeaponRepository.findByUserAndEquipped(user, true);</b>
+<b class="fc">&nbsp;        UserWeaponAttachment userWeaponAttachment = userWeaponAttachmentRepository.findByUserWeaponAndActive(userWeapon, true);</b>
+<b class="fc">&nbsp;        Attachment attachment = null;</b>
+<b class="fc">&nbsp;        if(userWeaponAttachment != null) {</b>
+<b class="nc">&nbsp;            attachment = userWeaponAttachment.getAttachment();</b>
+<b class="nc">&nbsp;        }</b>
+&nbsp;        Bullet bullet;
+<b class="fc">&nbsp;        if(attachment == null){</b>
+<b class="fc">&nbsp;            bullet = new Bullet(playerInGame, userWeapon.getBullet_size(), userWeapon.getWeapon_range(), userWeapon.getBullet_speed(), userWeapon.getDamage(), Float.parseFloat(body.get(&quot;x&quot;)), Float.parseFloat(body.get(&quot;y&quot;)), Float.parseFloat(body.get(&quot;angle&quot;)));</b>
+<b class="nc">&nbsp;</b>
+&nbsp;        }
+<b class="nc">&nbsp;        else{</b>
+<b class="nc">&nbsp;            bullet = new Bullet(playerInGame, userWeapon.getBullet_size() + attachment.getBullet_size(), userWeapon.getWeapon_range() + attachment.getWeapon_range(), userWeapon.getBullet_speed() + attachment.getBullet_speed(), userWeapon.getDamage() + attachment.getDamage(), Float.parseFloat(body.get(&quot;x&quot;)), Float.parseFloat(body.get(&quot;y&quot;)), Float.parseFloat(body.get(&quot;angle&quot;)));</b>
+<b class="nc">&nbsp;        }</b>
+<b class="fc">&nbsp;        bulletRepository.save(bullet);</b>
+<b class="fc">&nbsp;        bullet_update b = new bullet_update();</b>
+<b class="fc">&nbsp;        b.setBullet(bullet);</b>
+<b class="fc">&nbsp;        Thread t = new Thread(b);</b>
+<b class="fc">&nbsp;        t.start();</b>
+<b class="fc">&nbsp;        return new ResponseEntity&lt;&gt;(success, headers, 200);</b>
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2023-12-06 14:48</div>
+</div>
+</body>
+</html>

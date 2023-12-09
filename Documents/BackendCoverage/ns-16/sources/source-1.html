@@ -1,0 +1,208 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=windows-1252"> 
+  <title>Coverage Report > UserWeaponAttachment</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">com.CyHawkClash.Backend.Models.UserWeaponAttachment</a>
+</div>
+
+<h1>Coverage Summary for Class: UserWeaponAttachment (com.CyHawkClash.Backend.Models.UserWeaponAttachment)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">UserWeaponAttachment</td>
+<td class="coverageStat">
+  <span class="percent">
+    20%
+  </span>
+  <span class="absValue">
+    (2/10)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    54.2%
+  </span>
+  <span class="absValue">
+    (13/24)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">UserWeaponAttachment$HibernateInstantiator$3nE1WXnj</td>
+  </tr>
+  <tr>
+    <td class="name">UserWeaponAttachment$HibernateInstantiator$8o4peSrO</td>
+  </tr>
+  <tr>
+    <td class="name">UserWeaponAttachment$HibernateProxy$8vCQuUct</td>
+  </tr>
+  <tr>
+    <td class="name">UserWeaponAttachment$HibernateProxy$r3dfXwPL</td>
+  </tr>
+<tr>
+  <td class="name"><strong>Total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    20%
+  </span>
+  <span class="absValue">
+    (2/10)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    54.2%
+  </span>
+  <span class="absValue">
+    (13/24)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package com.CyHawkClash.Backend.Models.UserWeaponAttachment;
+&nbsp;
+&nbsp;import com.CyHawkClash.Backend.Models.Attachment.Attachment;
+&nbsp;import com.CyHawkClash.Backend.Models.UserWeapon.UserWeapon;
+&nbsp;import jakarta.persistence.*;
+&nbsp;import jakarta.persistence.criteria.CriteriaBuilder;
+&nbsp;
+&nbsp;import java.util.HashMap;
+&nbsp;import java.util.Map;
+&nbsp;
+&nbsp;@Entity
+&nbsp;@Table(name=&quot;UserWeaponAttachment&quot;)
+&nbsp;public class UserWeaponAttachment {
+&nbsp;
+&nbsp;    @Id
+&nbsp;    @GeneratedValue(strategy = GenerationType.IDENTITY)
+&nbsp;    private int id;
+&nbsp;
+&nbsp;    //Will this be weapons id? or user_weapon id?
+&nbsp;    //If this is user_weapon, I will update this when the user_weapon db is created.
+&nbsp;    @ManyToOne
+&nbsp;    @JoinColumn(name = &quot;userweapon_id&quot;)
+&nbsp;    private UserWeapon userWeapon;
+&nbsp;
+&nbsp;    @ManyToOne
+&nbsp;    @JoinColumn(name = &quot;attachment_id&quot;)
+&nbsp;    private Attachment attachment;
+&nbsp;
+&nbsp;    @Column(name = &quot;active&quot;)
+&nbsp;    private boolean active;
+&nbsp;
+&nbsp;
+<b class="nc">&nbsp;    public UserWeaponAttachment(UserWeapon userWeapon, Attachment attachment){</b>
+<b class="nc">&nbsp;        this.userWeapon = userWeapon;</b>
+<b class="nc">&nbsp;        this.attachment = attachment;</b>
+<b class="nc">&nbsp;        this.active = false;</b>
+&nbsp;    }
+&nbsp;
+<b class="fc">&nbsp;    public UserWeaponAttachment(){}</b>
+&nbsp;
+&nbsp;    public int getId() {
+<b class="nc">&nbsp;        return id;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public void setUserWeapon(UserWeapon userWeapon){
+<b class="nc">&nbsp;        this.userWeapon = userWeapon;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public UserWeapon getUserWeapon(){
+<b class="nc">&nbsp;        return this.userWeapon;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public void setAttachment(Attachment attachment){
+<b class="nc">&nbsp;        this.attachment=attachment;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public Attachment getAttachment(){
+<b class="nc">&nbsp;        return this.attachment;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public void setActive(Boolean active){
+<b class="nc">&nbsp;        this.active=active;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public Boolean isActive(){
+<b class="nc">&nbsp;        return active;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public Map&lt;String, String&gt; serialize(){
+<b class="fc">&nbsp;        Map&lt;String,String&gt; serialized = new HashMap&lt;&gt;();</b>
+&nbsp;
+<b class="fc">&nbsp;        serialized.put(&quot;id&quot;, Integer.toString(this.id));</b>
+<b class="fc">&nbsp;        serialized.put(&quot;name&quot;, this.attachment.getName());</b>
+<b class="fc">&nbsp;        serialized.put(&quot;fire_rate&quot;, Integer.toString(this.attachment.getFire_rate()));</b>
+<b class="fc">&nbsp;        serialized.put(&quot;num_max_bullets&quot;, Integer.toString(this.attachment.getNum_max_bullets()));</b>
+<b class="fc">&nbsp;        serialized.put(&quot;bullet_size&quot;, Integer.toString(this.attachment.getBullet_size()));</b>
+<b class="fc">&nbsp;        serialized.put(&quot;reload_rate&quot;, Integer.toString(this.attachment.getReload_rate()));</b>
+<b class="fc">&nbsp;        serialized.put(&quot;weapon_range&quot;, Integer.toString(this.attachment.getWeapon_range()));</b>
+<b class="fc">&nbsp;        serialized.put(&quot;bullet_speed&quot;, Integer.toString(this.attachment.getBullet_speed()));</b>
+<b class="fc">&nbsp;        serialized.put(&quot;damage&quot;, Integer.toString(this.attachment.getDamage()));</b>
+<b class="fc">&nbsp;        serialized.put(&quot;accuracy&quot;, Double.toString(this.attachment.getAccuracy()));</b>
+&nbsp;
+<b class="fc">&nbsp;        return serialized;</b>
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2023-12-06 14:48</div>
+</div>
+</body>
+</html>

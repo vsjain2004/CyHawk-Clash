@@ -1,0 +1,239 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=windows-1252"> 
+  <title>Coverage Report > dbfunc</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">com.CyHawkClash.Backend.Models</a>
+</div>
+
+<h1>Coverage Summary for Class: dbfunc (com.CyHawkClash.Backend.Models)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">dbfunc</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    73.3%
+  </span>
+  <span class="absValue">
+    (11/15)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    88.9%
+  </span>
+  <span class="absValue">
+    (32/36)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package com.CyHawkClash.Backend.Models;
+&nbsp;
+&nbsp;
+&nbsp;import com.CyHawkClash.Backend.Models.Attachment.Attachment;
+&nbsp;import com.CyHawkClash.Backend.Models.Bullet.Bullet;
+&nbsp;import com.CyHawkClash.Backend.Models.Game.Game;
+&nbsp;import com.CyHawkClash.Backend.Models.PlayerInGame.PlayerInGame;
+&nbsp;import com.CyHawkClash.Backend.Models.PlayerInGame.PlayerInGameRepository;
+&nbsp;import com.CyHawkClash.Backend.Models.PlayerInGameStatistics.PlayerInGameStatistics;
+&nbsp;import com.CyHawkClash.Backend.Models.PlayerInGameStatistics.PlayerInGameStatisticsRepository;
+&nbsp;import com.CyHawkClash.Backend.Models.Team.Team;
+&nbsp;import com.CyHawkClash.Backend.Models.Team.TeamRepository;
+&nbsp;import com.CyHawkClash.Backend.Models.User.User;
+&nbsp;import com.CyHawkClash.Backend.Models.UserWeapon.UserWeapon;
+&nbsp;import com.CyHawkClash.Backend.Models.UserWeapon.UserWeaponRepository;
+&nbsp;import com.CyHawkClash.Backend.Models.UserWeaponAttachment.UserWeaponAttachmentRepository;
+&nbsp;import com.CyHawkClash.Backend.Models.WeaponAttachment.WeaponAttachment;
+&nbsp;import com.CyHawkClash.Backend.Models.WeaponAttachment.WeaponAttachmentRepository;
+&nbsp;import com.CyHawkClash.Backend.Websocket.ChatServer;
+&nbsp;import org.slf4j.Logger;
+&nbsp;import org.slf4j.LoggerFactory;
+&nbsp;import org.springframework.beans.factory.annotation.Autowired;
+&nbsp;import org.springframework.stereotype.Service;
+&nbsp;
+&nbsp;import java.util.ArrayList;
+&nbsp;import java.util.Collection;
+&nbsp;import java.util.List;
+&nbsp;
+&nbsp;@Service
+&nbsp;public class dbfunc {
+&nbsp;
+&nbsp;
+&nbsp;    private static UserWeaponAttachmentRepository userWeaponAttachmentRepository;
+&nbsp;
+&nbsp;    private static UserWeaponRepository userWeaponRepository;
+&nbsp;
+&nbsp;
+&nbsp;    private static TeamRepository teamRepository;
+&nbsp;
+&nbsp;    private static WeaponAttachmentRepository weaponAttachmentRepository;
+&nbsp;
+&nbsp;
+&nbsp;    private static PlayerInGameRepository playerInGameRepository;
+&nbsp;
+&nbsp;
+&nbsp;    private static PlayerInGameStatisticsRepository playerInGameStatisticsRepository;
+&nbsp;
+<b class="fc">&nbsp;    private final Logger logger = LoggerFactory.getLogger(dbfunc.class);</b>
+&nbsp;
+&nbsp;    @Autowired
+&nbsp;    public void setTeamRepo(TeamRepository repo){
+<b class="fc">&nbsp;        teamRepository = repo;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Autowired
+&nbsp;    public void setPIGRepo(PlayerInGameRepository repo){
+<b class="fc">&nbsp;        playerInGameRepository = repo;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Autowired
+&nbsp;    public void setPIGSRepo(PlayerInGameStatisticsRepository repo){
+<b class="fc">&nbsp;        playerInGameStatisticsRepository = repo;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Autowired
+&nbsp;    public void setUserWeaponRepo(UserWeaponRepository repo){
+<b class="fc">&nbsp;        userWeaponRepository = repo;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Autowired
+&nbsp;    public void setUserWeaponAttachmentRepo(UserWeaponAttachmentRepository repo){
+<b class="fc">&nbsp;        userWeaponAttachmentRepository = repo;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Autowired
+&nbsp;    public void setWeaponAttachmentRepo(WeaponAttachmentRepository repo){
+<b class="fc">&nbsp;        weaponAttachmentRepository = repo;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public Attachment getAttachUser(User user){
+<b class="nc">&nbsp;        return userWeaponAttachmentRepository.findByUserWeaponAndActive(userWeaponRepository.findByUserAndEquipped(user, true), true).getAttachment();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public Collection&lt;WeaponAttachment&gt; getWeaponAttachUserWeapon(UserWeapon userWeapon){
+<b class="nc">&nbsp;        return weaponAttachmentRepository.findByWeapon(userWeapon.getWeapon());</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public UserWeapon getUserWeaponPIG(PlayerInGame playerInGame){
+<b class="nc">&nbsp;        return userWeaponRepository.findByUserAndEquipped(playerInGame.getUser(), true);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public Game getGameUser(User user){
+<b class="fc">&nbsp;        return playerInGameRepository.findByUserAndDeleted(user, false).getTeam().getGame();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public User getUserBullet(Bullet bullet){
+<b class="nc">&nbsp;        return bullet.getPlayerInGame().getUser();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public PlayerInGameStatistics getPIGStatsUser(User user){
+<b class="fc">&nbsp;        return playerInGameStatisticsRepository.findByPlayerInGameAndDeleted(playerInGameRepository.findByUserAndDeleted(user, false), false);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public List&lt;PlayerInGameStatistics&gt; getAllPIGStatsGame(User user){
+<b class="fc">&nbsp;        List&lt;PlayerInGameStatistics&gt; pigStatsList = new ArrayList&lt;&gt;();</b>
+<b class="fc">&nbsp;        Game game = getGameUser(user);</b>
+<b class="fc">&nbsp;        logger.info(String.valueOf(game.getId()));</b>
+<b class="fc">&nbsp;        Collection&lt;Team&gt; teams = teamRepository.findByGameAndDeleted(game, false);</b>
+&nbsp;
+<b class="fc">&nbsp;        for(Team team : teams){</b>
+<b class="fc">&nbsp;            logger.info(team.toString());</b>
+<b class="fc">&nbsp;            Collection&lt;PlayerInGame&gt; pigs = playerInGameRepository.findByTeam(team);</b>
+<b class="fc">&nbsp;            for(PlayerInGame pig : pigs){</b>
+<b class="fc">&nbsp;                logger.info(playerInGameStatisticsRepository.findByPlayerInGameAndDeleted(pig, false).toString());</b>
+<b class="fc">&nbsp;                if(playerInGameStatisticsRepository.findByPlayerInGameAndDeleted(pig, false) != null) {</b>
+<b class="fc">&nbsp;                    pigStatsList.add(playerInGameStatisticsRepository.findByPlayerInGameAndDeleted(pig, false));</b>
+&nbsp;                }
+<b class="fc">&nbsp;            }</b>
+<b class="fc">&nbsp;        }</b>
+<b class="fc">&nbsp;        return pigStatsList;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public List&lt;PlayerInGame&gt; getAllPIGGame(User user) {
+<b class="fc">&nbsp;        List&lt;PlayerInGame&gt; playerInGames = new ArrayList&lt;&gt;();</b>
+<b class="fc">&nbsp;        Game game = getGameUser(user);</b>
+<b class="fc">&nbsp;        Collection&lt;Team&gt; teams = teamRepository.findByGameAndDeleted(game, false);</b>
+<b class="fc">&nbsp;        for(Team team : teams){</b>
+<b class="fc">&nbsp;            Collection&lt;PlayerInGame&gt; pigs = playerInGameRepository.findByTeam(team);</b>
+<b class="fc">&nbsp;            playerInGames.addAll(pigs);</b>
+<b class="fc">&nbsp;        }</b>
+<b class="fc">&nbsp;        return playerInGames;</b>
+&nbsp;    }
+&nbsp;
+<b class="fc">&nbsp;    public dbfunc() {}</b>
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2023-12-06 14:48</div>
+</div>
+</body>
+</html>

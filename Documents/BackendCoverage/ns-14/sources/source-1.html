@@ -1,0 +1,224 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=windows-1252"> 
+  <title>Coverage Report > UserStatistics</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">com.CyHawkClash.Backend.Models.UserStatistics</a>
+</div>
+
+<h1>Coverage Summary for Class: UserStatistics (com.CyHawkClash.Backend.Models.UserStatistics)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">UserStatistics</td>
+<td class="coverageStat">
+  <span class="percent">
+    6.2%
+  </span>
+  <span class="absValue">
+    (1/16)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    4.3%
+  </span>
+  <span class="absValue">
+    (1/23)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">UserStatistics$HibernateInstantiator$1XTYN8F5</td>
+  </tr>
+  <tr>
+    <td class="name">UserStatistics$HibernateInstantiator$UwmTbFkg</td>
+  </tr>
+  <tr>
+    <td class="name">UserStatistics$HibernateProxy$ATXbnoTi</td>
+  </tr>
+  <tr>
+    <td class="name">UserStatistics$HibernateProxy$WWH0LA9T</td>
+  </tr>
+<tr>
+  <td class="name"><strong>Total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    6.2%
+  </span>
+  <span class="absValue">
+    (1/16)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    4.3%
+  </span>
+  <span class="absValue">
+    (1/23)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package com.CyHawkClash.Backend.Models.UserStatistics;
+&nbsp;
+&nbsp;import com.CyHawkClash.Backend.Models.User.User;
+&nbsp;import jakarta.persistence.*;
+&nbsp;
+&nbsp;@Entity
+&nbsp;public class UserStatistics {
+&nbsp;    @Id
+&nbsp;    @GeneratedValue(strategy = GenerationType.IDENTITY)
+&nbsp;    private int id;
+&nbsp;
+&nbsp;    @OneToOne
+&nbsp;    @JoinColumn(name = &quot;user_id&quot;)
+&nbsp;    private User user;
+&nbsp;
+&nbsp;    @Column(name = &quot;num_kills&quot;)
+&nbsp;    private int num_kills;
+&nbsp;
+&nbsp;    @Column(name = &quot;num_deaths&quot;)
+&nbsp;    private int num_deaths;
+&nbsp;
+&nbsp;    @Column(name = &quot;num_games&quot;)
+&nbsp;    private int num_games;
+&nbsp;
+&nbsp;    @Column(name = &quot;num_first_bloods&quot;)
+&nbsp;    private int num_first_bloods;
+&nbsp;
+&nbsp;    @Column(name = &quot;max_kills&quot;)
+&nbsp;    private int max_kills;
+&nbsp;
+&nbsp;    @Column(name = &quot;num_victories&quot;)
+&nbsp;    private int num_victories;
+&nbsp;
+<b class="nc">&nbsp;    public UserStatistics(User user) {</b>
+<b class="nc">&nbsp;        this.user = user;</b>
+<b class="nc">&nbsp;        this.max_kills = 0;</b>
+<b class="nc">&nbsp;        this.num_games = 0;</b>
+<b class="nc">&nbsp;        this.num_kills = 0;</b>
+<b class="nc">&nbsp;        this.num_deaths = 0;</b>
+<b class="nc">&nbsp;        this.num_first_bloods = 0;</b>
+<b class="nc">&nbsp;        this.num_victories = 0;</b>
+&nbsp;    }
+&nbsp;
+<b class="fc">&nbsp;    public UserStatistics() {}</b>
+&nbsp;
+&nbsp;    public int getId() {
+<b class="nc">&nbsp;        return id;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public User getUser() {
+<b class="nc">&nbsp;        return user;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public int getNum_kills() {
+<b class="nc">&nbsp;        return num_kills;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public void setNum_kills(int num_kills) {
+<b class="nc">&nbsp;        this.num_kills = num_kills;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public int getNum_deaths() {
+<b class="nc">&nbsp;        return num_deaths;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public void setNum_deaths(int num_deaths) {
+<b class="nc">&nbsp;        this.num_deaths = num_deaths;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public int getNum_games() {
+<b class="nc">&nbsp;        return num_games;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public void setNum_games(int num_games) {
+<b class="nc">&nbsp;        this.num_games = num_games;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public int getNum_first_bloods() {
+<b class="nc">&nbsp;        return num_first_bloods;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public void setNum_first_bloods(int num_first_bloods) {
+<b class="nc">&nbsp;        this.num_first_bloods = num_first_bloods;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public int getMax_kills() {
+<b class="nc">&nbsp;        return max_kills;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public void setMax_kills(int max_kills) {
+<b class="nc">&nbsp;        this.max_kills = max_kills;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public int getNum_victories() {
+<b class="nc">&nbsp;        return num_victories;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public void setNum_victories(int num_victories) {
+<b class="nc">&nbsp;        this.num_victories = num_victories;</b>
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2023-12-06 14:48</div>
+</div>
+</body>
+</html>

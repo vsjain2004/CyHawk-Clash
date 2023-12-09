@@ -1,0 +1,363 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=windows-1252"> 
+  <title>Coverage Report > PutController</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">com.CyHawkClash.Backend.Views</a>
+</div>
+
+<h1>Coverage Summary for Class: PutController (com.CyHawkClash.Backend.Views)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">PutController</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    80%
+  </span>
+  <span class="absValue">
+    (4/5)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    69.6%
+  </span>
+  <span class="absValue">
+    (48/69)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package com.CyHawkClash.Backend.Views;
+&nbsp;
+&nbsp;import com.CyHawkClash.Backend.Models.Attachment.AttachmentRepository;
+&nbsp;import com.CyHawkClash.Backend.Models.Bullet.Bullet;
+&nbsp;import com.CyHawkClash.Backend.Models.Bullet.BulletRepository;
+&nbsp;import com.CyHawkClash.Backend.Models.Game.Game;
+&nbsp;import com.CyHawkClash.Backend.Models.Game.GameRepository;
+&nbsp;import com.CyHawkClash.Backend.Models.GameStatistics.GameStatisticsRepository;
+&nbsp;import com.CyHawkClash.Backend.Models.Map.MapRepository;
+&nbsp;import com.CyHawkClash.Backend.Models.Moderator.Moderator;
+&nbsp;import com.CyHawkClash.Backend.Models.Moderator.ModeratorRepository;
+&nbsp;import com.CyHawkClash.Backend.Models.Objective.ObjectiveRepository;
+&nbsp;import com.CyHawkClash.Backend.Models.PlayerInGame.PlayerInGame;
+&nbsp;import com.CyHawkClash.Backend.Models.PlayerInGame.PlayerInGameRepository;
+&nbsp;import com.CyHawkClash.Backend.Models.PlayerInGameStatistics.PlayerInGameStatistics;
+&nbsp;import com.CyHawkClash.Backend.Models.PlayerInGameStatistics.PlayerInGameStatisticsRepository;
+&nbsp;import com.CyHawkClash.Backend.Models.Team.Team;
+&nbsp;import com.CyHawkClash.Backend.Models.Team.TeamRepository;
+&nbsp;import com.CyHawkClash.Backend.Models.User.User;
+&nbsp;import com.CyHawkClash.Backend.Models.User.UserRepository;
+&nbsp;import com.CyHawkClash.Backend.Models.UserWeapon.UserWeapon;
+&nbsp;import com.CyHawkClash.Backend.Models.UserWeapon.UserWeaponRepository;
+&nbsp;import com.CyHawkClash.Backend.Models.UserWeaponAttachment.UserWeaponAttachmentRepository;
+&nbsp;import com.CyHawkClash.Backend.Models.Weapon.Weapon;
+&nbsp;import com.CyHawkClash.Backend.Models.Weapon.WeaponRepository;
+&nbsp;import com.CyHawkClash.Backend.Models.WeaponAttachment.WeaponAttachmentRepository;
+&nbsp;import com.CyHawkClash.Backend.Models.dbfunc;
+&nbsp;import io.swagger.v3.oas.annotations.Operation;
+&nbsp;import io.swagger.v3.oas.annotations.media.Content;
+&nbsp;import io.swagger.v3.oas.annotations.media.ExampleObject;
+&nbsp;import io.swagger.v3.oas.annotations.media.Schema;
+&nbsp;import io.swagger.v3.oas.annotations.responses.ApiResponse;
+&nbsp;import io.swagger.v3.oas.annotations.responses.ApiResponses;
+&nbsp;import io.swagger.v3.oas.annotations.tags.Tag;
+&nbsp;import org.springframework.beans.factory.annotation.Autowired;
+&nbsp;import org.springframework.http.HttpHeaders;
+&nbsp;import org.springframework.http.ResponseEntity;
+&nbsp;import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+&nbsp;import org.springframework.web.bind.annotation.*;
+&nbsp;
+&nbsp;
+&nbsp;import java.util.*;
+&nbsp;
+&nbsp;@Tag(name = &quot;Put Contoller&quot;, description = &quot;This class contains all of the PUT API&#39;s&quot;)
+&nbsp;
+&nbsp;@RestController
+<b class="fc">&nbsp;public class PutController {</b>
+&nbsp;
+<b class="fc">&nbsp;    private String success = &quot;{\&quot;message\&quot;:\&quot;success\&quot;}&quot;;</b>
+<b class="fc">&nbsp;    private String failure = &quot;{\&quot;message\&quot;:\&quot;failure\&quot;}&quot;;</b>
+&nbsp;
+&nbsp;    @Autowired
+&nbsp;    private AttachmentRepository attachmentRepository;
+&nbsp;
+&nbsp;    @Autowired
+&nbsp;    private MapRepository mapRepository;
+&nbsp;
+&nbsp;    @Autowired
+&nbsp;    private ObjectiveRepository objectiveRepository;
+&nbsp;
+&nbsp;    @Autowired
+&nbsp;    private PlayerInGameRepository playerInGameRepository;
+&nbsp;
+&nbsp;    @Autowired
+&nbsp;    private UserRepository userRepository;
+&nbsp;
+&nbsp;    @Autowired
+&nbsp;    private UserWeaponRepository userWeaponRepository;
+&nbsp;
+&nbsp;    @Autowired
+&nbsp;    private UserWeaponAttachmentRepository userWeaponAttachmentRepository;
+&nbsp;
+&nbsp;    @Autowired
+&nbsp;    private WeaponRepository weaponRepository;
+&nbsp;
+&nbsp;    @Autowired
+&nbsp;    private WeaponAttachmentRepository weaponAttachmentRepository;
+&nbsp;
+&nbsp;    @Autowired
+&nbsp;    private PlayerInGameStatisticsRepository playerInGameStatisticsRepository;
+&nbsp;
+&nbsp;    @Autowired
+&nbsp;    private TeamRepository teamRepository;
+&nbsp;
+&nbsp;    @Autowired
+&nbsp;    private BulletRepository bulletRepository;
+&nbsp;
+&nbsp;    @Autowired
+&nbsp;    private ModeratorRepository moderatorRepository;
+&nbsp;
+&nbsp;    @Autowired
+&nbsp;    private GameRepository gameRepository;
+&nbsp;
+&nbsp;    @Autowired
+&nbsp;    private GameStatisticsRepository gameStatisticsRepository;
+&nbsp;
+&nbsp;
+&nbsp;    @Operation(
+&nbsp;            summary = &quot;Update PlayerInGameStatistics&quot;,
+&nbsp;            description = &quot;Based on the authentication token, hp, x, and y a PlayerInGameStatistics object will be updated&quot;
+&nbsp;    )
+&nbsp;    @ApiResponses({
+&nbsp;            @ApiResponse(responseCode = &quot;200&quot;, content = {@Content(examples = {
+&nbsp;                    @ExampleObject(value = &quot;{\&quot;message\&quot;:\&quot;success\&quot;}&quot;)
+&nbsp;            })}),
+&nbsp;            @ApiResponse(responseCode = &quot;400&quot;, content = {@Content(examples = {
+&nbsp;                    @ExampleObject(value = &quot;{\&quot;message\&quot;:\&quot;failure\&quot;}&quot;)
+&nbsp;            })}),
+&nbsp;            @ApiResponse(responseCode = &quot;403&quot;, content = {@Content(examples = {
+&nbsp;                    @ExampleObject(name = &quot;Invalid JWT&quot;, value = &quot;\&quot;User not Registered\&quot;&quot;),
+&nbsp;                    @ExampleObject(name = &quot;Other error&quot;, value = &quot;\&quot;User is logged out or not Registered\&quot;&quot;)
+&nbsp;            })})
+&nbsp;    })
+&nbsp;    @PutMapping (&quot;/pigstats&quot;)
+&nbsp;    public ResponseEntity&lt;Object&gt; pigStatsUpdate(@RequestBody Map&lt;String, Float&gt; request, @RequestHeader(&quot;Authorization&quot;) String token) throws Exception{
+&nbsp;
+<b class="fc">&nbsp;        HttpHeaders headers = new HttpHeaders();</b>
+<b class="fc">&nbsp;        headers.add(&quot;Content-type&quot;, &quot;application/json&quot;);</b>
+&nbsp;
+<b class="fc">&nbsp;        dbfunc db = new dbfunc();</b>
+&nbsp;
+&nbsp;
+<b class="fc">&nbsp;        int id = Integer.parseInt(response.decode_jwt(token));</b>
+<b class="fc">&nbsp;        PlayerInGameStatistics pigStats = db.getPIGStatsUser(userRepository.findById(id));</b>
+&nbsp;
+<b class="fc">&nbsp;        if(pigStats == null){</b>
+<b class="nc">&nbsp;            return new ResponseEntity&lt;&gt;(failure, headers, 400);</b>
+&nbsp;        }
+<b class="fc">&nbsp;        if(request.get(&quot;x_coordinate&quot;) == null || request.get(&quot;y_coordinate&quot;) == null){</b>
+<b class="nc">&nbsp;            return new ResponseEntity&lt;&gt;(failure, headers, 400);</b>
+&nbsp;        }
+<b class="fc">&nbsp;        pigStats.setX_coordinate(request.get(&quot;x_coordinate&quot;));</b>
+<b class="fc">&nbsp;        pigStats.setY_coordinate(request.get(&quot;y_coordinate&quot;));</b>
+&nbsp;
+&nbsp;//        Bullet bullet = new Bullet(pigStats.getPlayerInGame(), 1, 20, 2, 1, 200, 200, (float)Math.PI/4);
+&nbsp;//        bulletRepository.save(bullet);
+&nbsp;//        bullet_update b = new bullet_update();
+&nbsp;//        b.setBullet(bullet);
+&nbsp;//        Thread t = new Thread(b);
+&nbsp;//        t.start();
+&nbsp;
+<b class="fc">&nbsp;        playerInGameStatisticsRepository.save(pigStats);</b>
+<b class="fc">&nbsp;        return new ResponseEntity&lt;&gt;(success, headers, 200);</b>
+&nbsp;
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;    @Operation(
+&nbsp;            summary = &quot;Update a Users account information&quot;,
+&nbsp;            description = &quot;Based on the authentication token, new_username, new_email, new_phone, or new_password &quot; +
+&nbsp;                    &quot;a User object will be updated&quot;
+&nbsp;    )
+&nbsp;    @ApiResponses({
+&nbsp;            @ApiResponse(responseCode = &quot;200&quot;, content = {@Content(schema = @Schema(implementation = User.class))}),
+&nbsp;            @ApiResponse(responseCode = &quot;400&quot;, content = {@Content(examples = {
+&nbsp;                    @ExampleObject(value = &quot;{\&quot;message\&quot;:\&quot;failure\&quot;}&quot;)
+&nbsp;            })}),
+&nbsp;            @ApiResponse(responseCode = &quot;403&quot;, content = {@Content(examples = {
+&nbsp;                    @ExampleObject(name = &quot;Invalid JWT&quot;, value = &quot;\&quot;User not Registered\&quot;&quot;),
+&nbsp;                    @ExampleObject(name = &quot;Other error&quot;, value = &quot;\&quot;User is logged out or not Registered\&quot;&quot;)
+&nbsp;            })})
+&nbsp;    })
+&nbsp;    @PutMapping(&quot;/users&quot;)
+&nbsp;    public ResponseEntity&lt;Object&gt; userUpdate(@RequestBody java.util.Map&lt;String, String&gt; request, @RequestHeader(&quot;Authorization&quot;) String token) throws Exception {
+&nbsp;
+<b class="fc">&nbsp;        HttpHeaders headers = new HttpHeaders();</b>
+<b class="fc">&nbsp;        headers.add(&quot;Content-type&quot;, &quot;application/json&quot;);</b>
+&nbsp;
+<b class="fc">&nbsp;        int id = Integer.parseInt(response.decode_jwt(token));</b>
+<b class="fc">&nbsp;        User user = userRepository.findById(id);</b>
+<b class="fc">&nbsp;        if (user == null) {</b>
+<b class="nc">&nbsp;            return new ResponseEntity&lt;&gt;(failure, headers, 400);</b>
+&nbsp;        }
+&nbsp;        //Changes Username
+<b class="fc">&nbsp;        if (request.containsKey(&quot;new_username&quot;)) {</b>
+<b class="fc">&nbsp;            if ((userRepository.findByUsernameAndDeleted(request.get(&quot;new_username&quot;), false) == null)) {</b>
+<b class="fc">&nbsp;                user.setUsername(request.get(&quot;new_username&quot;));</b>
+&nbsp;            }
+&nbsp;        }
+&nbsp;        //Changes email
+<b class="fc">&nbsp;        if (request.containsKey(&quot;new_email&quot;)) {</b>
+<b class="fc">&nbsp;            if((userRepository.findByEmailAndDeleted(request.get(&quot;new_email&quot;), false) == null)) {</b>
+<b class="fc">&nbsp;                user.setEmail(request.get(&quot;new_email&quot;));</b>
+&nbsp;            }
+&nbsp;        }
+&nbsp;        //Changes phone
+<b class="fc">&nbsp;        if (request.containsKey(&quot;new_phone&quot;)) {</b>
+<b class="fc">&nbsp;            if((userRepository.findByPhoneAndDeleted(request.get(&quot;new_phone&quot;), false) == null)) {</b>
+<b class="fc">&nbsp;                user.setPhone(request.get(&quot;new_phone&quot;));</b>
+&nbsp;            }
+&nbsp;        }
+&nbsp;        //Changes Password --- Encodes the password
+<b class="fc">&nbsp;        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(4);</b>
+<b class="fc">&nbsp;        if (request.containsKey(&quot;new_password&quot;)) {</b>
+<b class="fc">&nbsp;            if(!encoder.matches(request.get(&quot;new_password&quot;), user.getPassword())) {</b>
+<b class="fc">&nbsp;                user.setPassword(encoder.encode(request.get(&quot;new_password&quot;)));</b>
+&nbsp;            }
+&nbsp;        }
+&nbsp;
+<b class="fc">&nbsp;        userRepository.save(user);</b>
+<b class="fc">&nbsp;        return new ResponseEntity&lt;&gt;(user, headers, 200);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;    @PutMapping(&quot;/user_weapon&quot;)
+&nbsp;    public ResponseEntity&lt;Object&gt; changeEquippedWeapon(@RequestBody java.util.Map&lt;String, Integer&gt; request, @RequestHeader(&quot;Authorization&quot;) String token) throws Exception{
+<b class="fc">&nbsp;        HttpHeaders headers = new HttpHeaders();</b>
+<b class="fc">&nbsp;        headers.add(&quot;Content-type&quot;, &quot;application/json&quot;);</b>
+&nbsp;
+<b class="fc">&nbsp;        int id = Integer.parseInt(response.decode_jwt(token));</b>
+<b class="fc">&nbsp;        User user = userRepository.findById(id);</b>
+<b class="fc">&nbsp;        if (user == null) {</b>
+<b class="nc">&nbsp;            return new ResponseEntity&lt;&gt;(failure, headers, 400);</b>
+&nbsp;        }
+<b class="fc">&nbsp;        if(request == null){</b>
+<b class="nc">&nbsp;            return new ResponseEntity&lt;&gt;(failure, headers, 400);</b>
+&nbsp;        }
+<b class="fc">&nbsp;        UserWeapon oldWeapon = userWeaponRepository.findByUserAndEquipped(user, true);</b>
+<b class="fc">&nbsp;        oldWeapon.setEquipped(false);</b>
+<b class="fc">&nbsp;        userWeaponRepository.save(oldWeapon);</b>
+&nbsp;
+<b class="fc">&nbsp;        Weapon weapon = weaponRepository.findById(request.get(&quot;weapon_id&quot;).intValue());</b>
+&nbsp;
+<b class="fc">&nbsp;        UserWeapon newWeapon = userWeaponRepository.findByUserAndWeapon(user, weapon);</b>
+&nbsp;
+<b class="fc">&nbsp;        newWeapon.setEquipped(true);</b>
+<b class="fc">&nbsp;        userWeaponRepository.save(newWeapon);</b>
+&nbsp;
+<b class="fc">&nbsp;        return new ResponseEntity&lt;&gt;(success, headers, 200);</b>
+&nbsp;
+&nbsp;    }
+&nbsp;
+&nbsp;    @PutMapping(&quot;/start_game&quot;)
+&nbsp;    public ResponseEntity&lt;Object&gt; start_game(@RequestHeader(&quot;Authorization&quot;) String token) throws Exception {
+<b class="nc">&nbsp;        HttpHeaders headers = new HttpHeaders();</b>
+<b class="nc">&nbsp;        headers.add(&quot;Content-type&quot;, &quot;application/json&quot;);</b>
+&nbsp;
+<b class="nc">&nbsp;        int id = Integer.parseInt(response.decode_jwt(token));</b>
+<b class="nc">&nbsp;        User user = userRepository.findById(id);</b>
+<b class="nc">&nbsp;        if (user == null) {</b>
+<b class="nc">&nbsp;            return new ResponseEntity&lt;&gt;(failure, headers, 400);</b>
+&nbsp;        }
+&nbsp;
+<b class="nc">&nbsp;        Moderator moderator = moderatorRepository.findByUserAndDeleted(user, false);</b>
+<b class="nc">&nbsp;        if (moderator == null){</b>
+<b class="nc">&nbsp;            return new ResponseEntity&lt;&gt;(failure, headers, 403);</b>
+&nbsp;        }
+&nbsp;
+<b class="nc">&nbsp;        Game game = gameRepository.findByModAndDeleted(moderator, false);</b>
+<b class="nc">&nbsp;        game.setInLobby(false);</b>
+<b class="nc">&nbsp;        GameTime gameTime = new GameTime();</b>
+<b class="nc">&nbsp;        gameTime.setGameStatistics(gameStatisticsRepository.findByGame(game));</b>
+<b class="nc">&nbsp;        Thread t = new Thread(gameTime);</b>
+<b class="nc">&nbsp;        t.start();</b>
+&nbsp;
+<b class="nc">&nbsp;        return new ResponseEntity&lt;&gt;(success, headers, 200);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2023-12-06 14:48</div>
+</div>
+</body>
+</html>

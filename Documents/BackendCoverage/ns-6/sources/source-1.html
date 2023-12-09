@@ -1,0 +1,247 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=windows-1252"> 
+  <title>Coverage Report > Bullet</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">com.CyHawkClash.Backend.Models.Bullet</a>
+</div>
+
+<h1>Coverage Summary for Class: Bullet (com.CyHawkClash.Backend.Models.Bullet)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">Bullet</td>
+<td class="coverageStat">
+  <span class="percent">
+    88.2%
+  </span>
+  <span class="absValue">
+    (15/17)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    93.3%
+  </span>
+  <span class="absValue">
+    (28/30)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">Bullet$HibernateInstantiator$SOdid8fM</td>
+  </tr>
+  <tr>
+    <td class="name">Bullet$HibernateInstantiator$YVYWUIrB</td>
+  </tr>
+  <tr>
+    <td class="name">Bullet$HibernateProxy$bmapXfOa</td>
+  </tr>
+  <tr>
+    <td class="name">Bullet$HibernateProxy$ImGV90DX</td>
+  </tr>
+<tr>
+  <td class="name"><strong>Total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    88.2%
+  </span>
+  <span class="absValue">
+    (15/17)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    93.3%
+  </span>
+  <span class="absValue">
+    (28/30)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package com.CyHawkClash.Backend.Models.Bullet;
+&nbsp;
+&nbsp;import com.CyHawkClash.Backend.Models.PlayerInGame.PlayerInGame;
+&nbsp;import jakarta.persistence.*;
+&nbsp;
+&nbsp;@Entity
+&nbsp;public class Bullet {
+&nbsp;    @Id
+&nbsp;    @GeneratedValue(strategy = GenerationType.IDENTITY)
+&nbsp;    private int id;
+&nbsp;
+&nbsp;    @ManyToOne
+&nbsp;    @JoinColumn(name = &quot;playeringame_id&quot;)
+&nbsp;    private PlayerInGame playerInGame;
+&nbsp;
+&nbsp;    @Column(name = &quot;size&quot;)
+&nbsp;    private int size;
+&nbsp;
+&nbsp;    @Column(name = &quot;bulletRange&quot;)
+&nbsp;    private int bulletRange;
+&nbsp;
+&nbsp;    @Column(name = &quot;speed&quot;)
+&nbsp;    private int speed;
+&nbsp;
+&nbsp;    @Column(name = &quot;damage&quot;)
+&nbsp;    private float damage;
+&nbsp;
+&nbsp;    @Column(name = &quot;X&quot;)
+&nbsp;    private float X;
+&nbsp;
+&nbsp;    @Column(name = &quot;Y&quot;)
+&nbsp;    private float Y;
+&nbsp;
+&nbsp;    @Column(name = &quot;old_x&quot;)
+&nbsp;    private float old_x;
+&nbsp;
+&nbsp;    @Column(name = &quot;old_y&quot;)
+&nbsp;    private float old_y;
+&nbsp;
+&nbsp;    @Column(name = &quot;angle&quot;)
+&nbsp;    private float angle;
+&nbsp;
+&nbsp;    @Column(name = &quot;deleted&quot;)
+&nbsp;    private boolean deleted;
+&nbsp;
+<b class="fc">&nbsp;    public Bullet(PlayerInGame playerInGame, int size, int bulletRange, int speed, float damage, float x, float y, float angle) {</b>
+<b class="fc">&nbsp;        this.playerInGame = playerInGame;</b>
+<b class="fc">&nbsp;        this.size = size;</b>
+<b class="fc">&nbsp;        this.bulletRange = bulletRange;</b>
+<b class="fc">&nbsp;        this.speed = speed;</b>
+<b class="fc">&nbsp;        this.damage = damage;</b>
+<b class="fc">&nbsp;        this.X = x;</b>
+<b class="fc">&nbsp;        this.Y = y;</b>
+<b class="fc">&nbsp;        this.old_x = x;</b>
+<b class="fc">&nbsp;        this.old_y = y;</b>
+<b class="fc">&nbsp;        this.angle = angle;</b>
+<b class="fc">&nbsp;        this.deleted = false;</b>
+&nbsp;    }
+&nbsp;
+<b class="fc">&nbsp;    public Bullet() {}</b>
+&nbsp;
+&nbsp;    public int getId() {
+<b class="nc">&nbsp;        return id;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public PlayerInGame getPlayerInGame() {
+<b class="fc">&nbsp;        return playerInGame;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public int getSize() {
+<b class="fc">&nbsp;        return size;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public int getBulletRange() {
+<b class="fc">&nbsp;        return bulletRange;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public int getSpeed() {
+<b class="fc">&nbsp;        return speed;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public float getDamage() {
+<b class="nc">&nbsp;        return damage;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public float getAngle() {
+<b class="fc">&nbsp;        return angle;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public float getX() {
+<b class="fc">&nbsp;        return X;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public void setX(float x) {
+<b class="fc">&nbsp;        this.old_x = this.X;</b>
+<b class="fc">&nbsp;        this.X = x;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public float getY() {
+<b class="fc">&nbsp;        return Y;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public void setY(float y) {
+<b class="fc">&nbsp;        this.old_y = this.Y;</b>
+<b class="fc">&nbsp;        this.Y = y;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public float getOld_x(){
+<b class="fc">&nbsp;        return this.old_x;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public float getOld_y(){
+<b class="fc">&nbsp;        return  this.old_y;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public boolean isDeleted() {
+<b class="fc">&nbsp;        return deleted;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public void delete() {
+<b class="fc">&nbsp;        this.deleted = true;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2023-12-06 14:48</div>
+</div>
+</body>
+</html>
